@@ -5,12 +5,13 @@ public class Palindrome {
 	  
 	        // We are pointing to the beginning and the end of the string 
 	        int i = 0, j = str.length() - 1; 
+	      
 	  
 	        // While there are characters to compare to
 	        while (i < j) { 
 	  
 	            // If there is a mismatch 
-	            if (str.charAt(i) != str.charAt(j)) 
+	            if (str.toLowerCase().charAt(i) != str.charAt(j)) 
 	                return false; 
 	  
 	            // Increment first pointer and decrement the other 
@@ -25,7 +26,7 @@ public class Palindrome {
 	    // Driver code 
 	    public static void main(String[] args) 
 	    { 
-	        String str = "lol"; 
+	        String str = "loL"; 
 	  
 	        if (isPalindrome(str)) 
 	            System.out.print("Yes, it's palindrome"); 
