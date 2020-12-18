@@ -6,7 +6,7 @@ public class ArrayGo {
 	
 	public static void main(String[] args) {
 		
-		int ar[]= new int[] {4,344,66,3,33,9,40,15};
+		int ar[]= new int[] {404,344,66,3,303,9,404,15};
 		System.out.println("Array :");
 		System.out.println(Arrays.toString(ar));
 		
@@ -101,17 +101,55 @@ public class ArrayGo {
 		
 		// Compare sums and print the max out of it.(max of sum of even vs odd)
 		if (sumEv > sumOdd){
-			System.out.println("Sum of even numbers is bigger that odds by "+(sumEv-sumOdd));
+			System.out.println("\nSum of even numbers is bigger that odds by "+(sumEv-sumOdd));
 		}
 		else if (sumEv < sumOdd){
-			System.out.println("Sum of odd numbers is bigger that even by "+(sumOdd-sumEv));
+			System.out.println("\nSum of odd numbers is bigger that even by "+(sumOdd-sumEv));
 		}
-		else {System.out.println("Sum of odd numbers is equel to sum of even numbers");
+		else {System.out.println("\nSum of odd numbers is equel to sum of even numbers");
 		}
 		
+		
+		/* 5)Find the minimum and the maximum element in an array */
+		
+		int max = Arrays.stream(ar).max().getAsInt();
+		System.out.println("\nThe maximum element in an array equels "+max);
+		
+		
+		int min = Arrays.stream(ar).min().getAsInt();
+		System.out.println("\nThe minimum element in an array equels "+min);
+		
+		
+		/* 6)Find all palindromic numbers in an array */
+		
+		System.out.println("\nPalindrome numbers in array : ");
+       
+
+		for (int i = 0; i < ar.length-1; i++) {
+			
+	        int num = ar[i]; 
+	        int reversed = 0; 
+	        int remainder = 0;
+	        int original = num;
+
+	        // reversed integer is stored in variable 
+	        while( num != 0 )
+	        {
+	            remainder = num % 10;
+	            reversed= reversed * 10 + remainder;
+	            num  /= 10;
+	        }
+
+	        // Number is palindrome if orignal and reversed numbers are equal
+	        if (original == reversed)
+	            System.out.print(original + " ");
+
+			}
+  
 	}
 
 }
+
 //Tasks
 /*
 *1)Print the array in reverse order
