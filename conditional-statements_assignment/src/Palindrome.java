@@ -1,9 +1,11 @@
 
+//Create class with a method which checks if the given value is palindrome or not
+
 public class Palindrome {
 	  static boolean isPalindrome(String str) 
 	    { 
 	  
-	        // We are pointing to the beginning and the end of the string 
+	        // Point to the beginning and the end of the string 
 	        int i = 0, j = str.length() - 1; 
 	      
 	  
@@ -19,7 +21,7 @@ public class Palindrome {
 	            j--; 
 	        } 
 	  
-	        // Given string is a palindrome 
+	        // If no mismatch appears -> given string is a palindrome 
 	        return true; 
 	    } 
 	  
@@ -27,10 +29,11 @@ public class Palindrome {
 	    public static void main(String[] args) 
 	    { 
 	        String str = "loL"; 
+	        System.out.print(str);
 	  
 	        if (isPalindrome(str)) 
-	            System.out.print("Yes, it's palindrome"); 
+	            System.out.print(" is palindrome"); 
 	        else
-	            System.out.print("No, it's not palindrome"); 
+	            System.out.print(" is not palindrome"); 
 	    } 
 }
