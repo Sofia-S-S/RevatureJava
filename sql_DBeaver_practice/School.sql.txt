@@ -1,0 +1,69 @@
+--DROP SCHEMA "School";
+
+--To drop a schema including all contained objects:
+--DROP SCHEMA "School" CASCADE;
+
+CREATE SCHEMA "School";
+
+CREATE TABLE "School".students ();
+
+ALTER TABLE "School".students ADD student_id int NOT NULL;
+ALTER TABLE "School".students ADD student_first_name varchar(20) NOT NULL;
+ALTER TABLE "School".students ADD student_last_name varchar(20) NOT NULL;
+---------------
+INSERT INTO "School".students VALUES (529, 'Michael','Smith');
+INSERT INTO "School".students VALUES (674, 'Nicholas','Brown');
+INSERT INTO "School".students VALUES (857, 'Melissa','Johnson');
+INSERT INTO "School".students VALUES (876, 'Thomas','Williams');
+INSERT INTO "School".students VALUES (866, 'Jack','Miller');
+INSERT INTO "School".students VALUES (948, 'William','Jones');
+INSERT INTO "School".students VALUES (943, 'Anna','Davis');
+INSERT INTO "School".students VALUES (234, 'Angel','Lopez');
+INSERT INTO "School".students VALUES (748, 'Jose','Gonzales');
+INSERT INTO "School".students VALUES (247, 'Christina','Anderson');
+INSERT INTO "School".students VALUES (514, 'Maria','Moore');
+INSERT INTO "School".students VALUES (845, 'Hendrick','Lee');
+INSERT INTO "School".students VALUES (834, 'James','Harris');
+----------------------
+INSERT INTO "School".students_classes VALUES (234,5),(529,6),(529,7),(674,3),(674,1),
+(674,9),(674,3),(857,1),(876,3),(866,2),(834,2),(845,4),(514,8),(247,6),(748,9),
+(234,4),(748,2),(234,9),(943,2),(948,5),(866,7);
+
+ALTER TABLE "School".students ADD CONSTRAINT students_pk PRIMARY KEY (student_id);
+---------------
+CREATE TABLE "School".classes (
+
+class_id int NOT NULL,
+class_name varchar(20) NOT NULL,
+class_credits int NOT NULL,
+PRIMARY KEY (class_id));
+
+---------------
+CREATE TABLE "School".students_classes (
+
+student_id int NOT NULL,
+class_id int NOT NULL,
+FOREIGN KEY (student_id) REFERENCES "School".students(student_id),
+FOREIGN KEY (class_id) REFERENCES "School".classes(class_id));
+
+--ALTER TABLE "School".students_classes ADD CONSTRAINT students_classes_fk FOREIGN KEY (student_id) REFERENCES "School".students(student_id);
+--ALTER TABLE "School".students_classes DROP CONSTRAINT students_classes_fk;
+
+---------------
+CREATE TABLE "School".tests (
+
+student_id int NOT NULL,
+student_first_name varchar(20) NOT NULL,
+student_last_name varchar(20) NOT NULL,
+PRIMARY KEY (student_id)
+);
+ALTER TABLE "School".tests RENAME COLUMN student_id TO student_id_new;
+
+DROP TABLE "School".tests;
+
+--Join 3 tables:
+SELECT * FROM students s
+JOIN students_classes sc
+on s.student_id = sc.student_id
+join classes c
+on c.class_id = sc.class_id; 
