@@ -24,7 +24,7 @@ public class PostgresqlConnection {
 		String username="postgres";
 		String password = "Ne18mne!";
 		connection=DriverManager.getConnection(url, username, password);
-		System.out.println("my connection is OK");
+//		System.out.println("my connection is OK");
 		return connection;
 
 	}

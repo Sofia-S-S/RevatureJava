@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.app.dao.PlayerCrudDAO;
@@ -53,9 +54,22 @@ public class PlayerCrudDAOImpl implements PlayerCrudDAO{
 
 
 	@Override
-	public void deletePlayer(int id) {
-		// TODO Auto-generated method stub
-		
+	public int deletePlayer(int id) throws BusinessException {
+		// Task
+		int d= 0;
+		try (Connection connection=PostgresqlConnection.getConnection()){	
+		String sql="delete from sport.players where id=?";
+		PreparedStatement preparedStatement=connection.prepareStatement(sql);
+		preparedStatement.setInt(1, id);
+		d = preparedStatement.executeUpdate();
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e);//take off this lane when app is live
+			throw new BusinessException("Some internal error occured. Please contact admin");
+			
+		}
+		return d;
+	
 	}
 
 	@Override
@@ -109,9 +123,32 @@ public class PlayerCrudDAOImpl implements PlayerCrudDAO{
 	}
 
 	@Override
-	public List<Player> getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Player> getAllPlayers() throws BusinessException {
+		List<Player> playersList=new ArrayList<>();
+		try (Connection connection = PostgresqlConnection.getConnection()) {
+			String sql="select id,name,age,gender,team_name,contact,dob from sport.players";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Player player =new Player();
+				player.setId(resultSet.getInt("id"));
+				player.setName(resultSet.getString("name"));
+				player.setAge(resultSet.getInt("age"));
+				player.setGender(resultSet.getString("gender"));
+				player.setContact(resultSet.getLong("contact"));
+				player.setTeam_name(resultSet.getString("team_name"));
+				player.setDob(resultSet.getDate("dob"));
+				playersList.add(player);
+			}
+			if(playersList.size()==0)
+			{
+				throw new BusinessException("No Players in the DB yet");
+			}
+		}catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e); // Take off this line when app is live
+			throw new BusinessException("Internal error occured contact SYSADMIN ");
+		}
+		return playersList;
 	}
 
 }
