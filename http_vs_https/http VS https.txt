@@ -1,0 +1,78 @@
+1) http?
+2) http vs https?
+3) who is a client? who is a server?
+4) http methods (get, post, delete, put, patch, trace, options)?
+5) http status codes(100-500)? How will these status codes be helpful between client and server?
+
+HTTP stands for Hypertext Transfer Protocol. 
+At it’s most basic, it allows for the communication between different systems. 
+It’s most commonly used to transfer data from a web server to a browser 
+in order to allow users to view web pages. 
+
+HTTPS stands for Hypertext Transfer Protocol Secure. 
+The problem with the regular HTTP protocol is that the information that flows 
+from server to browser is not encrypted, which means it can be easily stolen. 
+HTTPS protocols remedy this by using an 
+ - SSL (secure sockets layer) certificate, which helps create a secure encrypted connection 
+between the server and the browser, thereby protecting potentially sensitive information 
+from being stolen as it is transferred between the server and the browser.
+- TLS (Transport Layer Security) protocol.That helps provide 
+* data integrity, which helps prevent the transfer of data from being modified or corrupted, 
+* and authentication, which proves to your users that they are communicating with the intended website.
+____________________________________________________________________________
+
+					Difference Between HTTP and HTTPS
+
+Parameter			HTTP					HTTPS
+Protocol	It is hypertext transfer protocol.	It is hypertext transfer protocol with secure.
+Security	It is less secure as the data 		It is designed to prevent hackers from accessing
+		can be vulnerable to hackers.		critical information. It is secure against such attacks.
+Port		It uses port 80 by default		It was use port 443 by default.
+Starts with	HTTP URLs begin with http://		HTTPs URLs begin with https://
+Used for	It's a good fit for websites designed 	If the website needs to collect the private information such
+		for information consumption like blogs.	as credit card number, then it is a more secure protocol.
+Scrambling	HTTP does not scramble the data 	HTTPS scrambles the data before transmission. 
+							At the receiver end, it descrambles to recover the original data. 
+							Therefore, the transmitted information is secure which can't be hacked.
+Protocol	It operates at TCP/IP level.		HTTPS does not have any separate protocol. 
+							It operates using HTTP but uses encrypted TLS/SSL connection.
+Domain Name Validation	HTTP website do not need SSL.	requires SSL certificate.
+Data encryption	HTTP website doesn't use encryption.	use data encryption.
+Search Ranking	HTTP does not improve search rankings.	HTTPS helps to improve search ranking.
+Speed		Fast					Slower than HTTP
+Vulnerability	Vulnerable to hackers			It Is highly secure as the data is encrypted before it is seen across a network.
+
+____________________________________________________________________________
+HTTP defines a set of request methods to indicate the desired action to be performed for a given resource. 
+
+GET	The GET method requests a representation of the specified resource. 
+	Requests using GET should only retrieve data.
+
+HEAD	The HEAD method asks for a response identical to that of a GET request, 
+	but without the response body.
+
+POST  	The POST method is used to submit an entity to the specified resource, 
+	often causing a change in state or side effects on the server.
+
+PUT	The PUT method replaces all current representations of the target resource 
+	with the request payload.
+
+DELETE  	The DELETE method deletes the specified resource.
+
+CONNECT		The CONNECT method establishes a tunnel to the server identified by the target resource.
+
+OPTIONS		The OPTIONS method is used to describe the communication options for the target resource.
+
+TRACE		The TRACE method performs a message loop-back test along the path to the target resource.
+
+PATCH		The PATCH method is used to apply partial modifications to a resource.
+______________________________________________________________________________
+HTTP response status codes 
+- indicate whether a specific HTTP request has been successfully completed.
+	5 classes:
+
+1. Informational responses (100–199) # 100 Continue, 102 Processing (WebDAV)
+2. Successful responses (200–299)  #  200 OK, 201 Created, 202 Accepted
+3. Redirects (300–399)  # 300 Multiple Choice, 301 Moved Permanently, 303 See Other
+4. Client errors (400–499) # 404 Not Found, 401 Unauthorized , 402 Payment Required 
+5. Server errors (500–599) # 500 Internal Server Error, 505 HTTP Version Not Supported 501 Not Implemented
