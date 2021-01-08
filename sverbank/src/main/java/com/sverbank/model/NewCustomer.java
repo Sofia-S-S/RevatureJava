@@ -2,9 +2,8 @@ package com.sverbank.model;
 
 import java.util.Date;
 
-public class Customer {
+public class NewCustomer {
 	
-	private int id;
 	private String first_name;
 	private String last_name;
 	private String gender;
@@ -14,15 +13,13 @@ public class Customer {
 	private String address;
 	
 	
-	public Customer() {
-		// TODO Auto-generated constructor stub
-	}
+	public NewCustomer() {}
 
 
-	public Customer(int id, String first_name, String last_name, String gender, Date dob, long ssn, long contact,
+	public NewCustomer(String first_name, String last_name, String gender, Date dob, long ssn, long contact,
 			String address) {
 		super();
-		this.id = id;
+
 		this.first_name = first_name;
 		this.last_name = last_name;
 		this.gender = gender;
@@ -30,29 +27,6 @@ public class Customer {
 		this.ssn = ssn;
 		this.contact = contact;
 		this.address = address;
-	}
-	
-	// New Customer Constructor
-
-	public Customer( String first_name, String last_name, String gender, Date dob, long ssn, long contact,
-			String address) {
-		super();
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.gender = gender;
-		this.dob = dob;
-		this.ssn = ssn;
-		this.contact = contact;
-		this.address = address;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 
@@ -128,10 +102,8 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", gender=" + gender
+		return "NewCustomer [first_name=" + first_name + ", last_name=" + last_name + ", gender=" + gender
 				+ ", dob=" + dob + ", ssn=" + ssn + ", contact=" + contact + ", address=" + address + "]";
 	}
-
-	
 
 }
