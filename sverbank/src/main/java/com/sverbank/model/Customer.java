@@ -132,6 +132,12 @@ public class Customer {
 				+ ", dob=" + dob + ", ssn=" + ssn + ", contact=" + contact + ", address=" + address + "]";
 	}
 
+
+	public void setLogin(String login) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }
