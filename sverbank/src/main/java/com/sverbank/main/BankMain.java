@@ -13,6 +13,7 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Transaction;
 import com.sverbank.service.CustomerService;
 import com.sverbank.service.impl.CustomerServiceImpl;
 
@@ -42,7 +43,7 @@ public class BankMain {
 			switch (ch) {
 //--1------------------------------------Customer-------------------------------------	
 			
-//------------------------------------Customer log in ----------------------------			
+			//------------------------------------Customer log in ----------------------------			
 			case 1:
 				try {
 					System.out.println("Customer log in page");
@@ -55,97 +56,150 @@ public class BankMain {
 					CustomerLogin customer_login = service.letCustomerLogin(login, password);
 					Customer customer = service.getCustomerById(customer_login.getCustomer_id());
 					List<Account> accountsList = service.getAccountsById(customer.getId());
+					
 					if (customer_login != null && customer !=null) {
-						System.out.println("Hello "+ customer.getFirst_name());
-						System.out.println("Your accounts:");
+						System.out.println("\nHello "+ customer.getFirst_name());
+						System.out.println("\nYour accounts:\n");
 						for(Account a : accountsList) {
-							System.out.println(a);
+							System.out.println(a.getAccount_number()+"  |  "+a.getStatus()+"  |  $"+a.getBalance());
 						}
+						//----------------------Customer menu-----------------------------
+						int chC = 0;
+						
+						do {
+							System.out.println("\nCustomer MENU");
+							System.out.println("===========================");
+							System.out.println("1)Withdraw money");
+							System.out.println("2)Add funds");
+							System.out.println("3)Transfer money");
+
+							System.out.println("5)EXIT");
+							System.out.println("Please enter appropriate choice between 1-3");
+							try {
+								chC = Integer.parseInt(sc.nextLine());
+							} catch (NumberFormatException e) {
+							}
+							//--1.1--------------- Withdraw money ----------------------------------
+
+							switch (chC) {
+							case 1:
+								try {
+									System.out.println("Enter account number you woul like to access) ");
+									long account_number = Long.parseLong(sc.nextLine());
+									// Check status of account
+									Account account = service.getAccountByNumber(account_number);
+									if (account.getStatus().equals("active")) {
+										System.out.println("How much money would you like to withdraw");
+										double transaction = Double.parseDouble(sc.nextLine());
+										double balance = account.getBalance();
+										double newBalance = balance - transaction;
+										// update account balance
+										Account acc = service.updateAccountBalance(account_number, newBalance);
+										if (acc != null) {
+											System.out.println("\nYour new balance is: $ "+newBalance);
+										}else {
+											System.out.println("\nCould not update balance");}
+									}else {
+										System.out.println("\nYou account is not active");
+									};
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
+							break;
+							
+							//--1.2------------------------ Add money ----------------------------------		
+							
+							case 2:
+								try {
+									System.out.println("Enter account number you woul like to access) ");
+									long account_number = Long.parseLong(sc.nextLine());
+									// Check status of account
+									Account account = service.getAccountByNumber(account_number);
+									if (account.getStatus().equals("active")) {
+										System.out.println("How much money would you like to withdraw");
+										double transaction = Double.parseDouble(sc.nextLine());
+										double balance = account.getBalance();
+										double newBalance = balance + transaction;
+										// update account balance
+										Account acc = service.updateAccountBalance(account_number, newBalance);
+										if (acc != null) {
+											System.out.println("\nYour new balance is: $ "+newBalance);
+										}else {
+											System.out.println("\nCould not update balance");}
+									}else {
+										System.out.println("\nYou account is not active");
+									};
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
+							break;
+							
+							//--1.3-------------------Transfer money ----------------------------------		
+							
+							case 3:
+								
+								System.out.println("Enter account number you woul like to send money from) ");
+								long  sender_acc_num = Long.parseLong(sc.nextLine());
+																
+								//Check if account belongs to logged in customer
+								int loggedCustomerId = customer.getId();
+								Account account = service.getAccountByNumber(sender_acc_num);	
+								int accountOwnerId = account.getCustomer_id();
+								if (loggedCustomerId==accountOwnerId) {
+									//Check if account has an active status
+									if (account.getStatus().equals("active")) {
+										System.out.println("Enter recipient account number) ");
+										long  receiver_acc_num = Long.parseLong(sc.nextLine());
+										//Check if sender and recipient are different accounts
+										if (sender_acc_num != receiver_acc_num) {
+											//Validate recipient account
+											Account receiver = service.getAccountByNumber(receiver_acc_num);
+											if (receiver.getStatus().equals("active")) {
+												System.out.println("How much money would you like to send");
+												double amount = Double.parseDouble(sc.nextLine());
+												//Check amount of money to send and available balance
+												if (amount>0 && amount<account.getBalance()) {
+													Date date = new Date();
+													//Create new Transaction
+													Transaction transactoin = new Transaction( sender_acc_num, receiver_acc_num, amount, date);
+																	
+													try {
+														if(dao.createTransaction(transactoin)!=0) {
+															System.out.println("\n");
+														}
+													} catch (BusinessException e) {
+														System.out.println(e.getMessage());
+													}
+													System.out.println("Money send sucsessfully. Wait fot recipient to approve trunsfer");
+												} else 
+													{System.out.println("You can not send less then $1 or more then your available funds $"+account.getBalance());};
+											} else 
+												{System.out.println("Recipient account doe not accept transfers at the moment");};
+										} else {
+											System.out.println("You can not send money to the same account");};
+									} else {
+										System.out.println("This account is not in active status");};
+								}else {
+									System.out.println("This account does not belong to " +customer.getFirst_name());};
+								
+							break;
+								
+							//--1.4------------------------ Exit ----------------------------------		
+								
+							case 4:
+								System.out.println("Thank uoy for using Sverbank App V1.0. See you soon. ");
+
+								break;
+							
+							}
+							}while (chC != 10);
 					}
 			} catch (NumberFormatException e) {
 					System.out.println("Player Id cannot be special characters or symbols or white spaces it is numeric");
 			} catch (BusinessException e) {
 					System.out.println(e.getMessage());
 			}
-			//----------------------Customer menu-----------------------------
-				int chC = 0;
-				
-				do {
-					System.out.println("Customer MENU");
-					System.out.println("===========================");
-					System.out.println("1)Withdraw money");
-					System.out.println("2)Add funds");
 
-					System.out.println("3)EXIT");
-					System.out.println("Please enter appropriate choice between 1-3");
-					try {
-						chC = Integer.parseInt(sc.nextLine());
-					} catch (NumberFormatException e) {
-					}
-			//-------------------------- Withdraw money ----------------------------------
-
-					switch (chC) {
-					case 1:
-						try {
-							System.out.println("Enter account number you woul like to access) ");
-							long account_number = Long.parseLong(sc.nextLine());
-							System.out.println("How much money would you like to withdraw");
-							double transaction = Double.parseDouble(sc.nextLine());
-							String status = "active";
-
-							Account account = service.getAccountByNumber(account_number, status);
-						
-							double balance = account.getBalance();
-			
-							double newBalance = balance - transaction;
-						
-							// update account balance
-		
-							Account acc = service.updateAccountBalance(account_number, newBalance);
-							if (acc != null) {
-								System.out.println("\nYour new balance is: $ "+newBalance);
-								}
-							
-						} catch (BusinessException e) {
-							System.out.println(e.getMessage());
-						}
-				break;
-			//-------------------------- Add money ----------------------------------		
-					
-					case 2:
-						try {
-							System.out.println("Enter account number you woul like to access) ");
-							long account_number = Long.parseLong(sc.nextLine());
-							System.out.println("How much money would you like to add");
-							double transaction = Double.parseDouble(sc.nextLine());
-							String status = "active";
-
-							Account account = service.getAccountByNumber(account_number, status);
-						
-							double balance = account.getBalance();
-			
-							double newBalance = balance + transaction;
-						
-							// update account balance
-		
-//							Account acc = service.updateAccountBalance(account_number, newBalance);
-							if(dao.updateAccountBalance(account_number, newBalance)!=null) {
-								System.out.println("\nYour new balance is: $ "+newBalance);
-								}
-							
-						} catch (BusinessException e) {
-							System.out.println(e.getMessage());
-						}
-
-						break;
-						
-					case 3:
-						System.out.println("Thankq for using our PlayerSearch App V1.0... Have a good one... :) ");
-
-						break;
-					
-					}
-					}while (chC != 10);
 
 			
 

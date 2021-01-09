@@ -8,6 +8,7 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Transaction;
 import com.sverbank.service.CustomerService;
 
 public class CustomerServiceImpl implements CustomerService{
@@ -66,9 +67,11 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException {
 		Account account = null;
-		if(newBalance>0 && account_number<10000000000L) {
+		if(account_number>1000000000L && account_number<9999999999L) {
+			if(newBalance>0) {
 			System.out.println("updateAccountBalance service passed");
 			account = customerDAO.updateAccountBalance(account_number, newBalance);
+			}else {throw new BusinessException("You do not have enough funds for trunsaction");};
 		}else {
 			throw new BusinessException("Account Number " + account_number + " is INVALID or you do not have enough money for trunsaction");
 		}
@@ -78,7 +81,7 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Account getAccountByNumber(long account_number, String status) throws BusinessException {
 		Account account = null;
-		if(account_number>1000000000L && account_number<9999999999L && status.equals("active")) {
+		if(status.equals("active") && account_number>1000000000L && account_number<9999999999L) {
 			System.out.println("getAccountByNumber service passed");
 			account = customerDAO.getAccountByNumber(account_number, status);
 		}else {
@@ -86,7 +89,19 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return account;
 	}
-
+	
+	@Override
+	public Account getAccountByNumber(long account_number) throws BusinessException {
+		Account account = null;
+		if(account_number>1000000000L && account_number<9999999999L) {
+			System.out.println("getAccountByNumber service passed");
+			account = customerDAO.getAccountByNumber(account_number);
+		}else {
+			throw new BusinessException("Account Number " + account_number + " is INVALID");
+		}
+		return account;
+	}
+	
 	@Override
 	public List<Account> getAccountsByStatus(String status) throws BusinessException {
 		List<Account> accountsList = null;
@@ -105,10 +120,10 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Account updateAccountStatus(String status, long account_number) throws BusinessException {
 		Account account = null;
-		if(account_number>1000000000L && account_number<9999999999L && status.equals("active")) {
+		if(status.equals("active") && account_number>1000000000L && account_number<9999999999L) {
 			System.out.println("getAccountByNumber service passed");
 			account = customerDAO.getAccountByNumber(account_number, status);
-		}else if(account_number>1000000000L && account_number<9999999999L && status.equals("pending")) {
+		}else if(status.equals("pending") && account_number>1000000000L && account_number<9999999999L) {
 			System.out.println("getAccountByNumber service passed");
 			account = customerDAO.getAccountByNumber(account_number, status);
 		}else {
@@ -116,5 +131,7 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return account;
 	}
+
+
 
 }

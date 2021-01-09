@@ -13,6 +13,7 @@ import com.sverbank.dao.CustomerDAO;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Transaction;
 
 
 public class CustomerDAOImpl implements CustomerDAO {
@@ -258,6 +259,32 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 			} else {
 				System.out.println("getAccountByNumber DAO fail");
+				throw new BusinessException("Wrong account number or account has restricted status");
+
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new BusinessException("Internal error occured contact SYSADMIN ");
+		}
+		return account;
+	}
+	// ------------------------get one account by account number------------------------------------------
+	
+	@Override
+	public Account getAccountByNumber(long account_number) throws BusinessException {
+		Account account=null;
+		try (Connection connection = PostresqlConnection.getConnection()) {
+			String sql = "select customer_id, balance, status from sverbank.account where account_number=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1, account_number);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				account = new Account();
+				account.setAccount_number(account_number);
+				account.setCustomer_id(resultSet.getInt("customer_id"));
+				account.setBalance(resultSet.getDouble("balance"));
+				account.setStatus(resultSet.getString("status"));
+			} else {
+				System.out.println("getAccountByNumber DAO fail");
 				throw new BusinessException("Wrong account number");
 
 			}
@@ -308,6 +335,29 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		}
 		return account;
+	}
+
+	@Override
+	public int createTransaction(Transaction transaction) throws BusinessException {
+		int t = 0;
+		try (Connection connection=PostresqlConnection.getConnection()){
+			
+			String sql="insert into sverbank.transaction (sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?)";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setLong(1, transaction.getSender_acc_num());
+			preparedStatement.setLong(2, transaction.getReceiver_acc_num());
+			preparedStatement.setDouble(3, transaction.getAmount());
+			preparedStatement.setDate(4, new java.sql.Date(transaction.getDate().getTime()));
+			
+			t = preparedStatement.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			System.out.println(e);
+			
+			throw new BusinessException("Some internal error occured. Please contact admin");
+		}
+		return t;
 	}
 
 
