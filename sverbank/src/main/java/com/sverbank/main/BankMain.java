@@ -13,7 +13,7 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Transaction;
+import com.sverbank.model.Transfer;
 import com.sverbank.service.CustomerService;
 import com.sverbank.service.impl.CustomerServiceImpl;
 
@@ -71,10 +71,11 @@ public class BankMain {
 							System.out.println("===========================");
 							System.out.println("1)Withdraw money");
 							System.out.println("2)Add funds");
-							System.out.println("3)Transfer money");
+							System.out.println("3)Send money");
+							System.out.println("4)Receive money");
 
 							System.out.println("5)EXIT");
-							System.out.println("Please enter appropriate choice between 1-3");
+							System.out.println("Please enter appropriate choice between 1-5");
 							try {
 								chC = Integer.parseInt(sc.nextLine());
 							} catch (NumberFormatException e) {
@@ -90,9 +91,9 @@ public class BankMain {
 									Account account = service.getAccountByNumber(account_number);
 									if (account.getStatus().equals("active")) {
 										System.out.println("How much money would you like to withdraw");
-										double transaction = Double.parseDouble(sc.nextLine());
+										double transfer = Double.parseDouble(sc.nextLine());
 										double balance = account.getBalance();
-										double newBalance = balance - transaction;
+										double newBalance = balance - transfer;
 										// update account balance
 										Account acc = service.updateAccountBalance(account_number, newBalance);
 										if (acc != null) {
@@ -117,9 +118,9 @@ public class BankMain {
 									Account account = service.getAccountByNumber(account_number);
 									if (account.getStatus().equals("active")) {
 										System.out.println("How much money would you like to withdraw");
-										double transaction = Double.parseDouble(sc.nextLine());
+										double transfer = Double.parseDouble(sc.nextLine());
 										double balance = account.getBalance();
-										double newBalance = balance + transaction;
+										double newBalance = balance + transfer;
 										// update account balance
 										Account acc = service.updateAccountBalance(account_number, newBalance);
 										if (acc != null) {
@@ -138,43 +139,49 @@ public class BankMain {
 							
 							case 3:
 								
-								System.out.println("Enter account number you woul like to send money from) ");
+								System.out.println("Enter account number you would like to send money from) ");
 								long  sender_acc_num = Long.parseLong(sc.nextLine());
 																
 								//Check if account belongs to logged in customer
 								int loggedCustomerId = customer.getId();
-								Account account = service.getAccountByNumber(sender_acc_num);	
-								int accountOwnerId = account.getCustomer_id();
+								Account sender = service.getAccountByNumber(sender_acc_num);	//run to db
+								int accountOwnerId = sender.getCustomer_id();
 								if (loggedCustomerId==accountOwnerId) {
+									System.out.println("It is your account - passed");
 									//Check if account has an active status
-									if (account.getStatus().equals("active")) {
+									if (sender.getStatus().equals("active")) {
+										System.out.println("Account is active - passed");
 										System.out.println("Enter recipient account number) ");
 										long  receiver_acc_num = Long.parseLong(sc.nextLine());
 										//Check if sender and recipient are different accounts
 										if (sender_acc_num != receiver_acc_num) {
 											//Validate recipient account
-											Account receiver = service.getAccountByNumber(receiver_acc_num);
+											Account receiver = service.getAccountByNumber(receiver_acc_num); //run to db
 											if (receiver.getStatus().equals("active")) {
 												System.out.println("How much money would you like to send");
+												double balance = sender.getBalance();
 												double amount = Double.parseDouble(sc.nextLine());
 												//Check amount of money to send and available balance
-												if (amount>0 && amount<account.getBalance()) {
+												if (amount>0 && amount<sender.getBalance()) {
+													//Take money from account
 													Date date = new Date();
-													//Create new Transaction
-													Transaction transactoin = new Transaction( sender_acc_num, receiver_acc_num, amount, date);
-																	
+													
+													//Create new Transfer
+													Transfer transfer = new Transfer( sender_acc_num, receiver_acc_num, amount, date);
+													double newBalance = balance -amount;
+													//Subtract from balance (customer) && add to amount (transfer)			
 													try {
-														if(dao.createTransaction(transactoin)!=0) {
-															System.out.println("\n");
-														}
+														dao.sendMoney(transfer,sender_acc_num,newBalance);								//run to db
+														System.out.println("Money send successfully. Wait fot recipient to approve transfer");
+														
 													} catch (BusinessException e) {
 														System.out.println(e.getMessage());
 													}
-													System.out.println("Money send sucsessfully. Wait fot recipient to approve trunsfer");
+
 												} else 
-													{System.out.println("You can not send less then $1 or more then your available funds $"+account.getBalance());};
+													{System.out.println("You can not send less then $1 or more then your available funds $"+sender.getBalance());};
 											} else 
-												{System.out.println("Recipient account doe not accept transfers at the moment");};
+												{System.out.println("Recipient account does not accept transfers at the moment");};
 										} else {
 											System.out.println("You can not send money to the same account");};
 									} else {
@@ -183,16 +190,101 @@ public class BankMain {
 									System.out.println("This account does not belong to " +customer.getFirst_name());};
 								
 							break;
-								
-							//--1.4------------------------ Exit ----------------------------------		
-								
+							
+							//--1.4------------------------Receive money ----------------------------------		
+							
 							case 4:
+								try {
+									System.out.println("Enter your account number ");
+									long receiver_acc_num = Long.parseLong(sc.nextLine());
+									
+//									Validate account here
+									
+									// Check status of account
+									List<Transfer> transfersList = dao.getTtransfersByAccNumber(receiver_acc_num);
+
+										if (transfersList != null) {
+											System.out.println("\nYour awaiting trunsfers");
+											for (Transfer t : transfersList) {
+												System.out.println("id: "+t.geTtransfer_id()+" | from: "+t.getSender_acc_num()+ " | $"+t.getAmount()+" | on "+t.getDate());}
+												
+												//---------------------transfer menu------------------
+												int chTr=0;
+												do {
+													System.out.println("Choose 1, 2 or 3");
+													System.out.println("===========================");
+													System.out.println("1)Accept transfer");
+													System.out.println("2)Decline trunsfer");
+													System.out.println("3)Exit");
+													try {
+														chTr = Integer.parseInt(sc.nextLine());
+													} catch (NumberFormatException e) {
+													}
+
+													switch (chTr) {
+													//---------------Accept transfer-------------
+													case 1:
+														System.out.println("Enter id of transfer your would like to accept ");
+														int transfer_id = Integer.parseInt(sc.nextLine());
+														Double balance = dao.getAccountByNumber(receiver_acc_num).getBalance();
+														Double amount = dao.getTransferById(transfer_id).getAmount();
+														Double newBalance = balance + amount;
+														try {
+															dao.approveTransfer(newBalance, receiver_acc_num, transfer_id);
+															System.out.println("\nMoney trunsfered to your account sccessfully");
+															System.out.println("\nAvailible balance is $"+newBalance);
+															
+														} catch (BusinessException e) {
+															System.out.println(e.getMessage());
+															
+														}
+												break;
+												
+													//---------------Decline transfer------------
+												case 2:
+														System.out.println("Enter id of transfer your would like to accept ");
+														int tr_id = Integer.parseInt(sc.nextLine());
+														Double bal = dao.getAccountByNumber(receiver_acc_num).getBalance();
+														Double decline = dao.getTransferById(tr_id).getAmount();
+														Double newBal = bal + decline;
+														try {
+//															Change to sender_acc_num
+															dao.approveTransfer(newBal, receiver_acc_num, tr_id);
+															System.out.println("\nMoney trunsfered to your account sccessfully");
+															System.out.println("\nAvailible balance is $"+newBal);
+															
+														} catch (BusinessException e) {
+															System.out.println(e.getMessage());
+															
+														}
+													break;
+													//---------------Exit------------------------
+													case 3:
+												break;
+													
+												default:
+													System.out.println("Invalid menu option... Kindly Retry................!!!!");
+													break;
+												}
+											} while (chTr != 4);
+											
+										}else {
+											System.out.println("\nYou do not have awaiting transfers");}
+
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
+							break;
+								
+							//--1.5------------------------ Exit ----------------------------------		
+								
+							case 5:
 								System.out.println("Thank uoy for using Sverbank App V1.0. See you soon. ");
 
 								break;
 							
-							}
-							}while (chC != 10);
+						}
+							}while (chC != 5);
 					}
 			} catch (NumberFormatException e) {
 					System.out.println("Player Id cannot be special characters or symbols or white spaces it is numeric");
@@ -438,23 +530,26 @@ public class BankMain {
 
 						break;
 						
-//--3.3----------------------------------Change status of an account-------------------------------------	
+//--3.3----------------------------------Update status of an account-------------------------------------	
 					case 3:
 						System.out.println("Enter accout number status of witch you would like to change");
 						Long account_numberE = Long.parseLong(sc.nextLine());
 						
 						System.out.println("Enter new Status");
 						String statusE = sc.nextLine();
-						try {
-						Account accE= service.updateAccountStatus(statusE, account_numberE);
 						
-						if(accE!=null) {
-							System.out.println("\nAccount udated successfully");
-						}
+						try {
+					
+							if(service.updateAccountStatus(statusE, account_numberE)!=0) {
+								System.out.println("\nAccount udated successfully");
+							} else {
+								System.out.println("\nCould not update status");
+							};
+						
 						}catch (BusinessException e) {
 							System.out.println(e.getMessage());
 						}
-						break;
+					break;
 						
 //------------------------------------Exit-------------------------------------	
 					case 4:

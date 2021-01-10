@@ -2,29 +2,29 @@ package com.sverbank.model;
 
 import java.util.Date;
 
-public class Transaction {
+public class Transfer {
 	
-	private int trunsaction_id;
+	private int transfer_id;
 	private long sender_acc_num;
 	private long receiver_acc_num;
 	private double amount;
 	private Date date;
 	
-	public Transaction() {
+	public Transfer() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Transaction(int trunsaction_id, long sender_acc_num, long receiver_acc_num, double amount, Date date) {
+	public Transfer(int transfer_id, long sender_acc_num, long receiver_acc_num, double amount, Date date) {
 		super();
-		this.trunsaction_id = trunsaction_id;
+		this.transfer_id = transfer_id;
 		this.sender_acc_num = sender_acc_num;
 		this.receiver_acc_num = receiver_acc_num;
 		this.amount = amount;
 		this.date = date;
 	}
 	
-	// Constructor to create new transaction without assigning id
-	public Transaction(long sender_acc_num, long receiver_acc_num, double amount, Date date) {
+	// Constructor to create new Transfer without assigning id
+	public Transfer(long sender_acc_num, long receiver_acc_num, double amount, Date date) {
 		super();
 		this.sender_acc_num = sender_acc_num;
 		this.receiver_acc_num = receiver_acc_num;
@@ -32,12 +32,12 @@ public class Transaction {
 		this.date = date;
 	}
 
-	public int getTrunsaction_id() {
-		return trunsaction_id;
+	public int geTtransfer_id() {
+		return transfer_id;
 	}
 
-	public void setTrunsaction_id(int trunsaction_id) {
-		this.trunsaction_id = trunsaction_id;
+	public void seTtransfer_id(int transfer_id) {
+		this.transfer_id = transfer_id;
 	}
 
 	public long getSender_acc_num() {
@@ -74,7 +74,7 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [trunsaction_id=" + trunsaction_id + ", sender_acc_num=" + sender_acc_num
+		return "Transfer [transfer_id=" + transfer_id + ", sender_acc_num=" + sender_acc_num
 				+ ", receiver_acc_num=" + receiver_acc_num + ", amount=" + amount + ", date=" + date + "]";
 	}
 	
