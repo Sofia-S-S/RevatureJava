@@ -54,8 +54,10 @@ public class BankMain {
 					String password = sc.nextLine();	
 				
 					CustomerLogin customer_login = service.letCustomerLogin(login, password);
+					int loggedCustomerId = customer_login.getCustomer_id(); // ID of Logged IN Customer
 					Customer customer = service.getCustomerById(customer_login.getCustomer_id());
 					List<Account> accountsList = service.getAccountsById(customer.getId());
+					
 					
 					if (customer_login != null && customer !=null) {
 						System.out.println("\nHello "+ customer.getFirst_name());
@@ -89,7 +91,7 @@ public class BankMain {
 									long account_number = Long.parseLong(sc.nextLine());
 									// Check status of account
 									Account account = service.getAccountByNumber(account_number);
-									if (account.getStatus().equals("active")) {
+									if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
 										System.out.println("How much money would you like to withdraw");
 										double transfer = Double.parseDouble(sc.nextLine());
 										double balance = account.getBalance();
@@ -101,7 +103,7 @@ public class BankMain {
 										}else {
 											System.out.println("\nCould not update balance");}
 									}else {
-										System.out.println("\nYou account is not active");
+										System.out.println("\nWrong account number or your account is not active");
 									};
 								} catch (BusinessException e) {
 									System.out.println(e.getMessage());
@@ -116,7 +118,7 @@ public class BankMain {
 									long account_number = Long.parseLong(sc.nextLine());
 									// Check status of account
 									Account account = service.getAccountByNumber(account_number);
-									if (account.getStatus().equals("active")) {
+									if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
 										System.out.println("How much money would you like to withdraw");
 										double transfer = Double.parseDouble(sc.nextLine());
 										double balance = account.getBalance();
@@ -143,7 +145,6 @@ public class BankMain {
 								long  sender_acc_num = Long.parseLong(sc.nextLine());
 																
 								//Check if account belongs to logged in customer
-								int loggedCustomerId = customer.getId();
 								Account sender = service.getAccountByNumber(sender_acc_num);	//run to db
 								int accountOwnerId = sender.getCustomer_id();
 								if (loggedCustomerId==accountOwnerId) {
@@ -199,6 +200,9 @@ public class BankMain {
 									long receiver_acc_num = Long.parseLong(sc.nextLine());
 									
 //									Validate account here
+									Account receiver = service.getAccountByNumber(receiver_acc_num);	//run to db
+									int enteredAccountId = receiver.getCustomer_id();
+									if (loggedCustomerId==enteredAccountId) {
 									
 									// Check status of account
 									List<Transfer> transfersList = dao.getTtransfersByAccNumber(receiver_acc_num);
@@ -206,7 +210,7 @@ public class BankMain {
 										if (transfersList != null) {
 											System.out.println("\nYour awaiting trunsfers");
 											for (Transfer t : transfersList) {
-												System.out.println("id: "+t.geTtransfer_id()+" | from: "+t.getSender_acc_num()+ " | $"+t.getAmount()+" | on "+t.getDate());}
+												System.out.println("id: "+t.geTtransfer_id()+" | from: "+t.getSender_acc_num()+ " | $"+t.getAmount()+" | on "+t.getDate());
 												
 												//---------------------transfer menu------------------
 												int chTr=0;
@@ -215,21 +219,22 @@ public class BankMain {
 													System.out.println("===========================");
 													System.out.println("1)Accept transfer");
 													System.out.println("2)Decline trunsfer");
-													System.out.println("3)Exit");
+													System.out.println("3)Exit /To netx transfer");
 													try {
 														chTr = Integer.parseInt(sc.nextLine());
 													} catch (NumberFormatException e) {
 													}
-
+													
+													int transfer_id = t.geTtransfer_id();
+													long sender_acccount = t.getSender_acc_num();
 													switch (chTr) {
 													//---------------Accept transfer-------------
 													case 1:
-														System.out.println("Enter id of transfer your would like to accept ");
-														int transfer_id = Integer.parseInt(sc.nextLine());
-														Double balance = dao.getAccountByNumber(receiver_acc_num).getBalance();
-														Double amount = dao.getTransferById(transfer_id).getAmount();
-														Double newBalance = balance + amount;
 														try {
+															Double balance = dao.getAccountByNumber(receiver_acc_num).getBalance();
+															Double amount = dao.getTransferById(transfer_id).getAmount();
+															Double newBalance = balance + amount;
+															
 															dao.approveTransfer(newBalance, receiver_acc_num, transfer_id);
 															System.out.println("\nMoney trunsfered to your account sccessfully");
 															System.out.println("\nAvailible balance is $"+newBalance);
@@ -237,25 +242,27 @@ public class BankMain {
 														} catch (BusinessException e) {
 															System.out.println(e.getMessage());
 															
+														} finally {
+															chTr=3;
 														}
 												break;
 												
 													//---------------Decline transfer------------
 												case 2:
-														System.out.println("Enter id of transfer your would like to accept ");
-														int tr_id = Integer.parseInt(sc.nextLine());
-														Double bal = dao.getAccountByNumber(receiver_acc_num).getBalance();
-														Double decline = dao.getTransferById(tr_id).getAmount();
-														Double newBal = bal + decline;
+
 														try {
-//															Change to sender_acc_num
-															dao.approveTransfer(newBal, receiver_acc_num, tr_id);
-															System.out.println("\nMoney trunsfered to your account sccessfully");
-															System.out.println("\nAvailible balance is $"+newBal);
+															Double balance = dao.getAccountByNumber(sender_acccount).getBalance();
+															Double amount = dao.getTransferById(transfer_id).getAmount();
+															Double newBalance = balance + amount;
+															dao.approveTransfer(newBalance, sender_acccount, transfer_id);
+															System.out.println("\nMoney return to sender sccessfully");
+													
 															
 														} catch (BusinessException e) {
 															System.out.println(e.getMessage());
 															
+														}finally {
+															chTr=3;
 														}
 													break;
 													//---------------Exit------------------------
@@ -266,10 +273,15 @@ public class BankMain {
 													System.out.println("Invalid menu option... Kindly Retry................!!!!");
 													break;
 												}
-											} while (chTr != 4);
+											} while (chTr != 3);}
 											
 										}else {
-											System.out.println("\nYou do not have awaiting transfers");}
+											System.out.println("\nYou do not have awaiting transfers");
+											}
+									}else {
+										System.out.println("\nWrong account number");
+										}
+											
 
 								} catch (BusinessException e) {
 									System.out.println(e.getMessage());
