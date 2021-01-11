@@ -150,11 +150,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 			c = preparedStatement.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException | NumberFormatException e) {
 			
 			System.out.println(e);
 			
-			throw new BusinessException("Some internal error occured. Please contact admin");
+			throw new BusinessException("Some internal error occured. Please contact Sverbank");
 		}
 		return c;
 	}

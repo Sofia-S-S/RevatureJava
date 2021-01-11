@@ -17,6 +17,9 @@ public interface CustomerService {
 	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException;
 	public List<Account> getAccountsByStatus(String status) throws BusinessException;
 	public int updateAccountStatus(String status,long account_number) throws BusinessException;
+	public int createLogin(CustomerLogin customer_login) throws BusinessException;
+	
+//	public Account updateAccountStatus(String status,long account_number) throws BusinessException; // no DAO
 
 //	public int createTransfer(Transfer transfer)throws BusinessException;
 }

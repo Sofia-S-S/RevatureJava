@@ -8,7 +8,6 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Transfer;
 import com.sverbank.service.CustomerService;
 
 public class CustomerServiceImpl implements CustomerService{
@@ -17,14 +16,33 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public int createCustomer(Customer customer) throws BusinessException {
-//		int x = 0;
-//		if(customer.getFirst_name().matches("[a-zA-Z]{2,30}")) {
-//			x=customerDAO.createCustomer(customer);
-//			System.out.println("ilike yiu namr");
-//		} else {
-//			throw new BusinessException("Entered Name is INVALID");
-//		}
-		return 0;
+		int x = 0;
+		if(customer.getFirst_name().matches("[a-zA-Z]{2,30}")) {
+			if(customer.getLast_name().matches("[a-zA-Z]{2,30}")) {
+				if(customer.getGender().matches("[MF]{1}")) {
+					if(customer.getSsn()>100000000L && customer.getSsn()<999999999L) {
+						if(customer.getAddress()!=null) {
+							if(customer.getContact()>1000000000L && customer.getSsn()<9999999999L) {
+							x=customerDAO.createCustomer(customer);
+							} else {
+								throw new BusinessException("Phone number "+customer.getContact()+" is INVALID");
+							}
+						} else {
+							throw new BusinessException("Address "+customer.getAddress()+" is INVALID");
+						}
+					} else {
+						throw new BusinessException("Social Security Number "+customer.getSsn()+" is INVALID");
+					}
+				} else {
+					throw new BusinessException("Entered Gender "+customer.getGender()+" is INVALID");
+				}
+			} else {
+				throw new BusinessException("Entered Last Name "+customer.getLast_name()+" is INVALID");
+			}
+		} else {
+			throw new BusinessException("Entered First Name "+customer.getFirst_name()+" is INVALID");
+		}
+		return x;
 	}
 
 	@Override
@@ -38,6 +56,17 @@ public class CustomerServiceImpl implements CustomerService{
 			throw new BusinessException("Customer Id " + id + " is INVALID......");
 		}
 		return customer;
+	}
+	
+	@Override
+	public int createLogin(CustomerLogin customer_login) throws BusinessException {
+		int x = 0;
+		if(customer_login.getLogin().matches("[a-zA-Z0-9]{4,12})") && customer_login.getPassword().matches("[a-zA-Z0-9]{4,12})")) {
+			x = customerDAO.createLogin(customer_login);
+		} else {
+			throw new BusinessException("Login or password is INVALID. Please call bank to complite registration");
+		}
+		return x;
 	}
 
 	@Override
@@ -123,6 +152,8 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return up;
 	}
+
+
 
 
 

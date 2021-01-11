@@ -1,7 +1,8 @@
 package com.sverbank.main;
 
-import java.text.ParseException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -312,96 +313,79 @@ public class BankMain {
 //--2---------------------------New Customer Registration-------pending status------------------------------	
 		
 			case 2:
-				System.out.println("__________________________");
-				System.out.println("Register new customer page");
-				System.out.println("__________________________");
+				try {
+					System.out.println("__________________________");
+					System.out.println("Register new customer page");
+					System.out.println("__________________________");
 				
-				System.out.println("Enter your FIRST NAME");
-				String first_name=sc.nextLine();
-				System.out.println("Enter your LAST NAME");
-				String last_name=sc.nextLine();
-				System.out.println("Enter F or M for your gender");
-				String gender=sc.nextLine();
+					System.out.println("Enter your FIRST NAME");
+					String first_name=sc.nextLine();
+					System.out.println("Enter your LAST NAME");
+					String last_name=sc.nextLine();
+					System.out.println("Enter F or M for your gender");
+					String gender=sc.nextLine();
 				
 				
-//				System.out.println("Enter your DATE OF BIRTH");
-//				sc.useDelimiter(",");
-//				String dateString = sc.next();
-//			    DateFormat formatter = new SimpleDateFormat("EEEE dd MMM yyyy");
-//			    Date dob = formatter.parse(dateString);
-//			    System.out.println(dob);
+					System.out.println("Enter your DATE OF BIRTH in format yyyy-dd-mm");
+					String s = sc.nextLine();
+			    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
+			    	sdf.setLenient(false);
+			    	Date date = null;
+			    	try {
+			    		date = sdf.parse(s);
+			    	}catch (ParseException e1){
+			    		System.out.println("Invalid date format");
+			    	}
+			  
 										
 		
-				System.out.println("Enter your SSN");
-				Long ssn = Long.parseLong(sc.nextLine());
-				System.out.println("Enter your ADDRESS");
-				String address = sc.nextLine();	
-				System.out.println("Enter your PHONE number");
-				Long contact = Long.parseLong(sc.nextLine());
+					System.out.println("Enter your SSN");
+					Long ssn = Long.parseLong(sc.nextLine());
+					System.out.println("Enter your ADDRESS");
+					String address = sc.nextLine();	
+					System.out.println("Enter your PHONE number");
+					Long contact = Long.parseLong(sc.nextLine());
 							
 
-				//Create new Customer
+					//Create new Customer
+					Customer customer = new Customer( first_name, last_name,gender, new Date(), ssn, contact, address);
+
+					if(service.createCustomer(customer)!=0) {
+						
+						// Create Login
+
+						System.out.println("Enter new LOGIN");
+						String login = sc.nextLine();
+						System.out.println("Enter new PASSWORD");
+						String password = sc.nextLine();
+						
+						// Get new Customer ID by SSN
+						int id = dao.getCustomerBySSN(ssn).getId();
+						CustomerLogin customer_login= new CustomerLogin(id, login, password);
+
+							if(dao.createLogin(customer_login)!=0) {
+				
+								System.out.println("\nEnter starting balance for your account");
+								Double startBalance=sc.nextDouble();
 								
-				Customer customer = new Customer( first_name, last_name,gender, new Date(), ssn, contact, address);
-				
-				
-				try {
-					if(dao.createCustomer(customer)!=0) {
-						System.out.println("\n");
+								// Generate Account Number
+								long leftLimit = 1000000000L;
+							    long rightLimit = 9999999999L;
+							    long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+							    
+							    // Create new Account
+								Account newAccount = new Account(id,generatedLong, startBalance, "pending");
+
+									if(dao.createAccount(newAccount)!=0) {
+										System.out.println("\nAccount created successfully. Your accout number is: " + newAccount.getAccount_number());
+									}
+							}
 					}
 				} catch (BusinessException e) {
 					System.out.println(e.getMessage());
-					
 				}
 				
-				// Get new Customer ID by SSN
-				
-				Customer newCustomer = dao.getCustomerBySSN(ssn);
-				System.out.println("You ID is" + newCustomer.getId());
-				
-				System.out.println("\nEnter starting balance for your account");
-				Double startBalance=sc.nextDouble();
-				
-				// Generate Account Number
-				
-			    long leftLimit = 1000000000L;
-			    long rightLimit = 9999999999L;
-			    long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
-			    
-			    // Create new Account
-				
-				Account accountCr = new Account(newCustomer.getId(),generatedLong, startBalance, "pending");
-				
-				try {
-					if(dao.createAccount(accountCr)!=0) {
-						System.out.println("\nAccount created successfully. Your accout number is: " + accountCr.getAccount_number());
-					}
-				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
-					
-				}
-				
-				// Create Login
-				
-				sc.nextLine();
-				System.out.println("Enter new LOGIN");
-				String login = sc.nextLine();
-				
-				System.out.println("Enter new PASSWORD");
-				String password = sc.nextLine();
-				
-				CustomerLogin cusomer_login= new CustomerLogin(newCustomer.getId(), login, password);
-				
-				try {
-					if(dao.createLogin(cusomer_login)!=0) {
-						System.out.println("\nAccount created successfully");
-					}
-				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
-					
-				}
-				
-				break;
+			break;
 
 
 //----------------------------------------------------------------------------------				
@@ -449,11 +433,11 @@ public class BankMain {
 //					    System.out.println(dob);
 												
 				
-						System.out.println("Enter your SSN");
+						System.out.println("Enter your SSN (9 digits without spaces");
 						Long ssnE = Long.parseLong(sc.nextLine());
 						System.out.println("Enter your ADDRESS");
 						String addressE = sc.nextLine();	
-						System.out.println("Enter your PHONE number");
+						System.out.println("Enter your PHONE number (10 digits without spaces)");
 						Long contactE = Long.parseLong(sc.nextLine());
 									
 
