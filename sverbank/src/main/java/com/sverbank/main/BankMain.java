@@ -7,107 +7,134 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger; // import log
+
 
 import com.sverbank.dao.CustomerDAO;
+import com.sverbank.dao.LoginDAO;
 import com.sverbank.dao.impl.CustomerDAOImpl;
+import com.sverbank.dao.impl.LoginDAOImpl;
 import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Transfer;
+import com.sverbank.model.Employee;
+import com.sverbank.model.Transaction;
 import com.sverbank.service.CustomerService;
+import com.sverbank.service.LoginService;
 import com.sverbank.service.impl.CustomerServiceImpl;
+import com.sverbank.service.impl.LoginServiceImpl;
 
 
 public class BankMain {
+	
+	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
 
-	public static void main(String[] args) throws BusinessException, ParseException {
+
+
+	public static void main(String[] args) throws BusinessException, ParseException{
+
+
+	
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcome to Sverbank App V1.0");
-		System.out.println("---------------------------------------");
+
+
+
 		int ch = 0;
+		
 		CustomerDAO dao = new CustomerDAOImpl();
 		CustomerService service = new CustomerServiceImpl();
+		LoginDAO loginDAO = new LoginDAOImpl();
+		LoginService loginService = new LoginServiceImpl();
+		
 		do {
-			System.out.println("MAIN MENU");
-			System.out.println("===========================");
-			System.out.println("1)Log in to my account");
-			System.out.println("2)New Customer");
-			System.out.println("3)Employee log in");
+			log.info("\n==============================");
+			log.info("    WELCOME TO SVERBANK");
+			log.info("==============================");
+			log.info("  (1) Log in to my account");
+			log.info("  (2) New Customer");
+			log.info("  (3) Employee log in");
 			
-			System.out.println("Please enter appropriate choice between 1-3");
 			try {
 				ch = Integer.parseInt(sc.nextLine());
 			} catch (NumberFormatException e) {
 			}
 
 			switch (ch) {
-//--1------------------------------------Customer-------------------------------------	
 			
-			//------------------------------------Customer log in ----------------------------			
+//--1------------------------------------Customer log in-------------------------------------	
+			
 			case 1:
 				try {
-					System.out.println("Customer log in page");
-				
-					System.out.println("Enter your LOGIN");
+					log.info("  Enter your LOGIN");
 					String login = sc.nextLine();	
-					System.out.println("Enter your PASSWORD");
+					log.info("  Enter your PASSWORD");
 					String password = sc.nextLine();	
 				
-					CustomerLogin customer_login = service.letCustomerLogin(login, password);
+					CustomerLogin customer_login = loginService.letCustomerLogin(login, password);
 					int loggedCustomerId = customer_login.getCustomer_id(); // ID of Logged IN Customer
 					Customer customer = service.getCustomerById(customer_login.getCustomer_id());
 					List<Account> accountsList = service.getAccountsById(customer.getId());
 					
 					
 					if (customer_login != null && customer !=null) {
-						System.out.println("\nHello "+ customer.getFirst_name());
-						System.out.println("\nYour accounts:\n");
+						log.info("	Hello "+ customer.getFirst_name().toUpperCase() +".  Your accounts:\n");
+						log.info("--------------------------------------");
 						for(Account a : accountsList) {
-							System.out.println(a.getAccount_number()+"  |  "+a.getStatus()+"  |  $"+a.getBalance());
+							log.info(a.getAccount_number()+"  |  "+a.getStatus()+"  |  $"+a.getBalance());
 						}
 						//----------------------Customer menu-----------------------------
 						int chC = 0;
 						
 						do {
-							System.out.println("\nCustomer MENU");
-							System.out.println("===========================");
-							System.out.println("1)Withdraw money");
-							System.out.println("2)Add funds");
-							System.out.println("3)Send money");
-							System.out.println("4)Receive money");
-
-							System.out.println("5)EXIT");
-							System.out.println("Please enter appropriate choice between 1-5");
+							log.info("\n===========================");
+							log.info("     CUSTOMER MENU");
+							log.info("===========================");
+							log.info("	(1) Withdraw money");
+							log.info("  (2) Add funds");
+							log.info("  (3) Send money");
+							log.info("  (4) Receive money");
+							log.info("  (5) Apply for new account");
+							log.info("  (6)	EXIT");
+							
 							try {
 								chC = Integer.parseInt(sc.nextLine());
 							} catch (NumberFormatException e) {
 							}
-							//--1.1--------------- Withdraw money ----------------------------------
+							
+							//--1.1----------------------------- Withdraw money -----------------------------
 
 							switch (chC) {
 							case 1:
 								try {
-									System.out.println("Enter account number you woul like to access) ");
+									log.info("	Enter your account number ) ");
 									long account_number = Long.parseLong(sc.nextLine());
-									// Check status of account
-									Account account = service.getAccountByNumber(account_number);
-									if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
-										System.out.println("How much money would you like to withdraw");
-										double transfer = Double.parseDouble(sc.nextLine());
-										double balance = account.getBalance();
-										double newBalance = balance - transfer;
-										// update account balance
-										Account acc = service.updateAccountBalance(account_number, newBalance);
-										if (acc != null) {
-											System.out.println("\nYour new balance is: $ "+newBalance);
+									
+									//Check if account belongs to logged in customer
+									Account sender = service.getAccountByNumber(account_number);	//run to db
+									int accountOwnerId = sender.getCustomer_id();
+									if (loggedCustomerId==accountOwnerId) {
+									
+										// Check status of account
+										Account account = service.getAccountByNumber(account_number);
+										if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
+											log.info("	How much money would you like to withdraw");
+											double transfer = Double.parseDouble(sc.nextLine());
+											double balance = account.getBalance();
+											double newBalance = balance - transfer;
+											// update account balance
+											Account acc = service.updateAccountBalance(account_number, newBalance);
+											if (acc != null) {
+												log.info("\n  Money withdrawed successfully. Availible balance is: $ "+newBalance);
+											}else {
+												log.info("\n  Could not withdraw money");}
 										}else {
-											System.out.println("\nCould not update balance");}
+											log.info("\n  Wrong account number or your account is not active");
+										};
 									}else {
-										System.out.println("\nWrong account number or your account is not active");
-									};
+										log.info("  This account does not belong to " +customer.getFirst_name());};
 								} catch (BusinessException e) {
-									System.out.println(e.getMessage());
+									log.info(e.getMessage());
 								}
 							break;
 							
@@ -115,26 +142,34 @@ public class BankMain {
 							
 							case 2:
 								try {
-									System.out.println("Enter account number you woul like to access) ");
+									log.info("  Enter your account number) ");
 									long account_number = Long.parseLong(sc.nextLine());
-									// Check status of account
-									Account account = service.getAccountByNumber(account_number);
-									if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
-										System.out.println("How much money would you like to withdraw");
-										double transfer = Double.parseDouble(sc.nextLine());
-										double balance = account.getBalance();
-										double newBalance = balance + transfer;
-										// update account balance
-										Account acc = service.updateAccountBalance(account_number, newBalance);
-										if (acc != null) {
-											System.out.println("\nYour new balance is: $ "+newBalance);
+									
+									//Check if account belongs to logged in customer
+									Account sender = service.getAccountByNumber(account_number);	//run to db
+									int accountOwnerId = sender.getCustomer_id();
+									if (loggedCustomerId==accountOwnerId) {
+									
+										// Check status of account
+										Account account = service.getAccountByNumber(account_number);
+										if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
+											log.info("  How much money would you like to add");
+											double transfer = Double.parseDouble(sc.nextLine());
+											double balance = account.getBalance();
+											double newBalance = balance + transfer;
+											// update account balance
+											Account acc = service.updateAccountBalance(account_number, newBalance);
+											if (acc != null) {
+												log.info("\n Funds added successfully. Availible balance is: $ "+newBalance);
+											}else {
+												log.info("\n  Could not add funds");}
 										}else {
-											System.out.println("\nCould not update balance");}
+											log.info("\n  You account is not active");
+										};
 									}else {
-										System.out.println("\nYou account is not active");
-									};
+										log.info("  This account does not belong to " +customer.getFirst_name());};	
 								} catch (BusinessException e) {
-									System.out.println(e.getMessage());
+									log.info(e.getMessage());
 								}
 							break;
 							
@@ -142,54 +177,55 @@ public class BankMain {
 							
 							case 3:
 								
-								System.out.println("Enter account number you would like to send money from) ");
+								log.info("  Enter account number you would like to send money from) ");
 								long  sender_acc_num = Long.parseLong(sc.nextLine());
 																
 								//Check if account belongs to logged in customer
 								Account sender = service.getAccountByNumber(sender_acc_num);	//run to db
 								int accountOwnerId = sender.getCustomer_id();
 								if (loggedCustomerId==accountOwnerId) {
-									System.out.println("It is your account - passed");
+									log.info("It is your account - passed");
 									//Check if account has an active status
 									if (sender.getStatus().equals("active")) {
-										System.out.println("Account is active - passed");
-										System.out.println("Enter recipient account number) ");
+										log.info("Account is active - passed");
+										log.info("  Enter recipient account number) ");
 										long  receiver_acc_num = Long.parseLong(sc.nextLine());
 										//Check if sender and recipient are different accounts
 										if (sender_acc_num != receiver_acc_num) {
 											//Validate recipient account
 											Account receiver = service.getAccountByNumber(receiver_acc_num); //run to db
 											if (receiver.getStatus().equals("active")) {
-												System.out.println("How much money would you like to send");
+												log.info("  How much money would you like to send");
 												double balance = sender.getBalance();
 												double amount = Double.parseDouble(sc.nextLine());
 												//Check amount of money to send and available balance
 												if (amount>0 && amount<sender.getBalance()) {
 													//Take money from account
 													Date date = new Date();
+													String type = "transfer";
 													
 													//Create new Transfer
-													Transfer transfer = new Transfer( sender_acc_num, receiver_acc_num, amount, date);
+													Transaction transfer = new Transaction( type, sender_acc_num, receiver_acc_num, amount, date);
 													double newBalance = balance -amount;
-													//Subtract from balance (customer) && add to amount (transfer)			
+													//Subtract from balance (customer) && add to amount (transaction - transfer)			
 													try {
-														dao.sendMoney(transfer,sender_acc_num,newBalance);								//run to db
-														System.out.println("Money send successfully. Wait fot recipient to approve transfer");
+														dao.createTransactionTransfer (transfer,sender_acc_num,newBalance);								//run to db
+														log.info("  Money send successfully. Wait fot recipient to approve transfer");
 														
 													} catch (BusinessException e) {
-														System.out.println(e.getMessage());
+														log.info(e.getMessage());
 													}
 
 												} else 
-													{System.out.println("You can not send less then $1 or more then your available funds $"+sender.getBalance());};
+													{log.info("  You can not send less then $1 or more then your available funds $"+sender.getBalance());};
 											} else 
-												{System.out.println("Recipient account does not accept transfers at the moment");};
+												{log.info("  Recipient account does not accept transfers at the moment");};
 										} else {
-											System.out.println("You can not send money to the same account");};
+											log.info("  You can not send money to the same account");};
 									} else {
-										System.out.println("This account is not in active status");};
+										log.info("  This account is not in active status");};
 								}else {
-									System.out.println("This account does not belong to " +customer.getFirst_name());};
+									log.info("  This account does not belong to " +customer.getFirst_name());};
 								
 							break;
 							
@@ -197,51 +233,53 @@ public class BankMain {
 							
 							case 4:
 								try {
-									System.out.println("Enter your account number ");
+									log.info("  Enter your account number ");
 									long receiver_acc_num = Long.parseLong(sc.nextLine());
 									
-//									Validate account here
+									//Validate account 
 									Account receiver = service.getAccountByNumber(receiver_acc_num);	//run to db
 									int enteredAccountId = receiver.getCustomer_id();
 									if (loggedCustomerId==enteredAccountId) {
 									
 									// Check status of account
-									List<Transfer> transfersList = dao.getTtransfersByAccNumber(receiver_acc_num);
+									List<Transaction> transfersList = dao.getTtransfersByAccNumber(receiver_acc_num);
 
 										if (transfersList != null) {
-											System.out.println("\nYour awaiting trunsfers");
-											for (Transfer t : transfersList) {
-												System.out.println("id: "+t.geTtransfer_id()+" | from: "+t.getSender_acc_num()+ " | $"+t.getAmount()+" | on "+t.getDate());
+											log.info("\n  Your awaiting trunsfers");
+											log.info("--------------------------------------");
+											for (Transaction t : transfersList) {
+												log.info("  $"+t.getAmount()+" | from: "+t.getSender_acc_num()+ " | on "+t.getDate());
 												
 												//---------------------transfer menu------------------
 												int chTr=0;
 												do {
-													System.out.println("Choose 1, 2 or 3");
-													System.out.println("===========================");
-													System.out.println("1)Accept transfer");
-													System.out.println("2)Decline trunsfer");
-													System.out.println("3)Exit /To netx transfer");
+													
+													log.info("--------------------------------------");
+													log.info("  (1) Accept transfer");
+													log.info("  (2) Decline trunsfer");
+													log.info("  (3) Exit /NEXT transfer");
 													try {
 														chTr = Integer.parseInt(sc.nextLine());
 													} catch (NumberFormatException e) {
 													}
 													
-													int transfer_id = t.geTtransfer_id();
+													long transaction_id = t.getTransaction_id();
 													long sender_acccount = t.getSender_acc_num();
 													switch (chTr) {
 													//---------------Accept transfer-------------
 													case 1:
 														try {
 															Double balance = dao.getAccountByNumber(receiver_acc_num).getBalance();
-															Double amount = dao.getTransferById(transfer_id).getAmount();
+															Double amount = dao.getTransactionById(transaction_id).getAmount();
 															Double newBalance = balance + amount;
+															String type = "Approved Transfer";
 															
-															dao.approveTransfer(newBalance, receiver_acc_num, transfer_id);
-															System.out.println("\nMoney trunsfered to your account sccessfully");
-															System.out.println("\nAvailible balance is $"+newBalance);
+															dao.approveTransfer(newBalance, receiver_acc_num, transaction_id,type);
+															log.info("\n  Money trunsfered to your account sccessfully");
+															log.info("\n  Availible balance is $"+newBalance);
 															
 														} catch (BusinessException e) {
-															System.out.println(e.getMessage());
+															log.info(e.getMessage());
 															
 														} finally {
 															chTr=3;
@@ -253,14 +291,14 @@ public class BankMain {
 
 														try {
 															Double balance = dao.getAccountByNumber(sender_acccount).getBalance();
-															Double amount = dao.getTransferById(transfer_id).getAmount();
+															Double amount = dao.getTransactionById(transaction_id).getAmount();
 															Double newBalance = balance + amount;
-															dao.approveTransfer(newBalance, sender_acccount, transfer_id);
-															System.out.println("\nMoney return to sender sccessfully");
+															dao.approveTransfer(newBalance, sender_acccount, transaction_id,"Declined Transfer");
+															log.info("\n  Money returned to sender sccessfully");
 													
 															
 														} catch (BusinessException e) {
-															System.out.println(e.getMessage());
+															log.info(e.getMessage());
 															
 														}finally {
 															chTr=3;
@@ -271,38 +309,60 @@ public class BankMain {
 												break;
 													
 												default:
-													System.out.println("Invalid menu option... Kindly Retry................!!!!");
+													log.info("\n Invalid menu option. Please try again");
 													break;
 												}
 											} while (chTr != 3);}
 											
 										}else {
-											System.out.println("\nYou do not have awaiting transfers");
+											log.info("\n  You do not have awaiting transfers");
 											}
 									}else {
-										System.out.println("\nWrong account number");
+										log.info("\n  Wrong account number");
 										}
 											
 
 								} catch (BusinessException e) {
-									System.out.println(e.getMessage());
+									log.info(e.getMessage());
 								}
 							break;
 								
-							//--1.5------------------------ Exit ----------------------------------		
-								
-							case 5:
-								System.out.println("Thank uoy for using Sverbank App V1.0. See you soon. ");
-
-								break;
+							//--1.5----------------------Apply for new account ----------------------------------		
 							
+							case 5:
+								try {
+								
+									log.info("\n  Enter starting balance for your account");
+									Double startBalance=sc.nextDouble();
+							
+									// Generate Account Number
+									long leftLimit = 1000000000L;
+									long rightLimit = 9999999999L;
+									long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
+						    
+									// Create new Account
+									Account newAccount = new Account(customer.getId(),generatedLong, startBalance, "pending");
+
+									if(dao.createAccount(newAccount)!=0) {
+										log.info("\n  Registration complited successfully. Now you can log in");
+										log.info("  Your accoutn " + newAccount.getAccount_number()+" is pending");
+									} else { log.info("\nApplication did not go through");}
+								}catch (BusinessException e) {
+									log.info(e.getMessage());
+								}
+							
+							break;
+							//--1.6------------------------ Exit ----------------------------------		
+								
+							case 6:
+							break;
 						}
-							}while (chC != 5);
+							}while (chC != 6);
 					}
 			} catch (NumberFormatException e) {
-					System.out.println("Player Id cannot be special characters or symbols or white spaces it is numeric");
+					log.info("Player Id can not be special characters or symbols or white spaces it is numeric");
 			} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					log.info(e.getMessage());
 			}
 
 
@@ -314,19 +374,16 @@ public class BankMain {
 		
 			case 2:
 				try {
-					System.out.println("__________________________");
-					System.out.println("Register new customer page");
-					System.out.println("__________________________");
-				
-					System.out.println("Enter your FIRST NAME");
+
+					log.info("\n  Enter your FIRST NAME");
 					String first_name=sc.nextLine();
-					System.out.println("Enter your LAST NAME");
+					log.info("\n Enter your LAST NAME");
 					String last_name=sc.nextLine();
-					System.out.println("Enter F or M for your gender");
+					log.info("\n  Enter F or M for your gender");
 					String gender=sc.nextLine();
-				
-				
-					System.out.println("Enter your DATE OF BIRTH in format yyyy-dd-mm");
+					
+					// Date formatting
+					log.info("\n  Enter your DATE OF BIRTH in format yyyy-dd-mm");
 					String s = sc.nextLine();
 			    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
 			    	sdf.setLenient(false);
@@ -334,29 +391,25 @@ public class BankMain {
 			    	try {
 			    		date = sdf.parse(s);
 			    	}catch (ParseException e1){
-			    		System.out.println("Invalid date format");
+			    		log.info("Invalid date format");
 			    	}
-			  
-										
-		
-					System.out.println("Enter your SSN");
+
+					log.info("Enter your SSN");
 					Long ssn = Long.parseLong(sc.nextLine());
-					System.out.println("Enter your ADDRESS");
+					log.info("Enter your ADDRESS");
 					String address = sc.nextLine();	
-					System.out.println("Enter your PHONE number");
+					log.info("Enter your PHONE number");
 					Long contact = Long.parseLong(sc.nextLine());
-							
 
 					//Create new Customer
-					Customer customer = new Customer( first_name, last_name,gender, new Date(), ssn, contact, address);
+					Customer customer = new Customer( first_name, last_name,gender, date, ssn, contact, address);
 
 					if(service.createCustomer(customer)!=0) {
 						
 						// Create Login
-
-						System.out.println("Enter new LOGIN");
+						log.info("\n  Enter new LOGIN");
 						String login = sc.nextLine();
-						System.out.println("Enter new PASSWORD");
+						log.info("\n  Enter new PASSWORD");
 						String password = sc.nextLine();
 						
 						// Get new Customer ID by SSN
@@ -365,7 +418,7 @@ public class BankMain {
 
 							if(dao.createLogin(customer_login)!=0) {
 				
-								System.out.println("\nEnter starting balance for your account");
+								log.info("\n  Enter starting balance for your account");
 								Double startBalance=sc.nextDouble();
 								
 								// Generate Account Number
@@ -377,12 +430,13 @@ public class BankMain {
 								Account newAccount = new Account(id,generatedLong, startBalance, "pending");
 
 									if(dao.createAccount(newAccount)!=0) {
-										System.out.println("\nAccount created successfully. Your accout number is: " + newAccount.getAccount_number());
+										log.info("\n  Registration complited successfully. Now you can log in");
+										log.info("\n  Your accoutn " + newAccount.getAccount_number()+" is pending");
 									}
 							}
 					}
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					log.info(e.getMessage());
 				}
 				
 			break;
@@ -392,182 +446,198 @@ public class BankMain {
 //--3----------------------------------Employee--------------------------------------	
 				
 			case 3:
-				System.out.println("Employee log in page");
-				int chE = 0;
-				
-				do {
-					System.out.println("EMPLOYEE MENU");
-					System.out.println("===========================");
-					System.out.println("1)Register new customer");
-					System.out.println("2)View all accounts by status");
-					System.out.println("3)Change status of an account");
+				try {
+				log.info("  Enter your EMPLOYEE ID");
+				String employee_id=sc.nextLine();
+				log.info("  Enter your PASSWORD");
+				String password = sc.nextLine();
 
-					System.out.println("4)EXIT");
-					System.out.println("Please enter appropriate choice between 1-5");
-					try {
+				Employee employee = loginService.employeeLogin(employee_id, password);
+				
+				if (employee !=null) {
+					log.info("	Hello "+ employee.getName());
+			
+					int chE = 0;
+				
+					do {
+						log.info("\n===========================");;
+						log.info("       EMPLOYEE MENU");
+						log.info("===========================");
+						log.info("  (1)  Register new customer");
+						log.info("  (2)  View all accounts by status");
+						log.info("  (3)  Change status of an account");
+
+						log.info("  (4)  EXIT");
+
+				
 						chE = Integer.parseInt(sc.nextLine());
-					} catch (NumberFormatException e) {
-					}
 
-					switch (chE) {
-					
+
+						switch (chE) {
+
 //--3.1---------------------Employee Register new customer-----status active--------------------------------	
-					case 1:
-						System.out.println("__________________________");
-						System.out.println("Register new customer page");
-						System.out.println("__________________________");
-						
-						System.out.println("Enter your FIRST NAME");
-						String first_nameE=sc.nextLine();
-						System.out.println("Enter your LAST NAME");
-						String last_nameE=sc.nextLine();
-						System.out.println("Enter F or M for your gender");
-						String genderE=sc.nextLine();
-						
-						
-//						System.out.println("Enter your DATE OF BIRTH");
-//						sc.useDelimiter(",");
-//						String dateString = sc.next();
-//					    DateFormat formatter = new SimpleDateFormat("EEEE dd MMM yyyy");
-//					    Date dob = formatter.parse(dateString);
-//					    System.out.println(dob);
+						case 1:
+
+							log.info("  Enter customer's FIRST NAME");
+							String first_nameE=sc.nextLine();
+							log.info("  Enter customer's LAST NAME");
+							String last_nameE=sc.nextLine();
+							log.info("  Enter F or M for customer's gender");
+							String genderE=sc.nextLine();
+	
+							// Date formatting
+							log.info("  Ente customer'ss DATE OF BIRTH in format yyyy-dd-mm");
+							String s = sc.nextLine();
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
+							sdf.setLenient(false);
+							Date date = null;
+							try {
+								date = sdf.parse(s);
+							}catch (ParseException e1){
+								log.info("Invalid date format");
+							}
 												
-				
-						System.out.println("Enter your SSN (9 digits without spaces");
-						Long ssnE = Long.parseLong(sc.nextLine());
-						System.out.println("Enter your ADDRESS");
-						String addressE = sc.nextLine();	
-						System.out.println("Enter your PHONE number (10 digits without spaces)");
-						Long contactE = Long.parseLong(sc.nextLine());
+							log.info("  Enter SSN (9 digits without space))");
+							Long ssnE = Long.parseLong(sc.nextLine());
+							log.info("  Enter customer's ADDRESS");
+							String addressE = sc.nextLine();	
+							log.info("  Enter customer's PHONE number (10 digits without spaces)");
+							Long contactE = Long.parseLong(sc.nextLine());
 									
 
-						//Create new Customer
-										
-						Customer customerE = new Customer( first_nameE, last_nameE,genderE, new Date(), ssnE, contactE, addressE);
-						
-						
-						try {
-							if(dao.createCustomer(customerE)!=0) {
-								System.out.println("\n");
-							}
-						} catch (BusinessException e) {
-							System.out.println(e.getMessage());
+							//Create new Customer
+							Customer customerE = new Customer( first_nameE, last_nameE,genderE, date, ssnE, contactE, addressE);
+							try {
+								if(dao.createCustomer(customerE)!=0) {
+									log.info("\n");
+								}
+							} catch (BusinessException e) {
+								log.info(e.getMessage());
 							
-						}
+							}
 						
-						// Get new Customer ID by SSN
+							// Get new Customer ID by SSN
+							Customer newCustomerE = dao.getCustomerBySSN(ssnE);
+							log.info( "  Profile with  ID " + newCustomerE.getId()+" created succsessfully");
 						
-						Customer newCustomerE = dao.getCustomerBySSN(ssnE);
-						System.out.println("You ID is" + newCustomerE.getId());
+							log.info("\n   Enter starting balance forann account");
+							Double startBalanceE=sc.nextDouble();
 						
-						System.out.println("\nEnter starting balance for your account");
-						Double startBalanceE=sc.nextDouble();
-						
-						// Generate Account Number
-						
-					    long leftLimitE = 1000000000L;
-					    long rightLimitE = 9999999999L;
-					    long generatedLongE = leftLimitE + (long) (Math.random() * (rightLimitE - leftLimitE));
+							// Generate Account Number
+							long leftLimitE = 1000000000L;
+							long rightLimitE = 9999999999L;
+							long generatedLongE = leftLimitE + (long) (Math.random() * (rightLimitE - leftLimitE));
 					    
-					    // Create new Account
+							// Create new Account
+							Account accountE = new Account(newCustomerE.getId(),generatedLongE, startBalanceE, "active");
 						
-						Account accountE = new Account(newCustomerE.getId(),generatedLongE, startBalanceE, "active");
-						
-						try {
-							if(dao.createAccount(accountE)!=0) {
-								System.out.println("\nAccount created successfully. Your accout number is: " + accountE.getAccount_number());
-							}
-						} catch (BusinessException e) {
-							System.out.println(e.getMessage());
+							try {
+								if(dao.createAccount(accountE)!=0) {
+									log.info("\n   Account"+ accountE.getAccount_number()+" created successfully" );
+								}
+							} catch (BusinessException e) {
+								log.info(e.getMessage());
 							
-						}
-						
-						// Create Login
-						
-						sc.nextLine();
-						System.out.println("Enter new LOGIN");
-						String loginE = sc.nextLine();
-						
-						System.out.println("Enter new PASSWORD");
-						String passwordE = sc.nextLine();
-						
-						CustomerLogin cusomer_loginE= new CustomerLogin(newCustomerE.getId(), loginE, passwordE);
-						
-						try {
-							if(dao.createLogin(cusomer_loginE)!=0) {
-								System.out.println("\nAccount created successfully");
 							}
-						} catch (BusinessException e) {
-							System.out.println(e.getMessage());
+						
+							// Create Login
+							sc.nextLine();
+							log.info("  Enter new LOGIN");
+							String loginE = sc.nextLine();
+						
+							log.info("  Enter new PASSWORD");
+							String passwordE = sc.nextLine();
+						
+							CustomerLogin cusomer_loginE= new CustomerLogin(newCustomerE.getId(), loginE, passwordE);
+						
+							try {
+								if(dao.createLogin(cusomer_loginE)!=0) {
+									log.info("\n Loginn created successfully");
+								} else {
+									log.info("\n  Could not createloginn");
+								};
+							} catch (BusinessException e) {
+								log.info(e.getMessage());
 							
-						}
+							}
 						
 						break;
 					
 //--3.2----------------------------------View all accounts by Status-------------------------------------	
 				
-					case 2:
-						System.out.println("Enter STATUS");
-						String status = sc.nextLine();
-						try {
+						case 2:
+							log.info("  Enter STATUS");
+							String status = sc.nextLine();
+							try {
 						
-						List<Account> accountsList = service.getAccountsByStatus(status);
-						if (accountsList!= null) {
-							System.out.println("List of accounts with status:  "+ status);
-							for(Account a : accountsList) {
-								System.out.println(a);
+								List<Account> accountsList = service.getAccountsByStatus(status);
+								if (accountsList!= null) {
+									log.info("List of accounts with status:  "+ status);
+									for(Account a : accountsList) {
+										log.info(a);
+									}
+								}
+							} catch (NumberFormatException e) {
+								log.info("Player Id cannot be special characters or symbols or white spaces it is numeric");
+							} catch (BusinessException e) {
+								log.info(e.getMessage());
 							}
-						}
-				} catch (NumberFormatException e) {
-						System.out.println("Player Id cannot be special characters or symbols or white spaces it is numeric");
-				} catch (BusinessException e) {
-						System.out.println(e.getMessage());
-				}
 
 						break;
 						
 //--3.3----------------------------------Update status of an account-------------------------------------	
-					case 3:
-						System.out.println("Enter accout number status of witch you would like to change");
-						Long account_numberE = Long.parseLong(sc.nextLine());
+						case 3:
+							log.info("  Enter accout number status of witch you would like to change");
+							Long account_numberE = Long.parseLong(sc.nextLine());
 						
-						System.out.println("Enter new Status");
-						String statusE = sc.nextLine();
+							log.info("  Enter new Status");
+							String statusE = sc.nextLine();
 						
-						try {
+							try {
 					
-							if(service.updateAccountStatus(statusE, account_numberE)!=0) {
-								System.out.println("\nAccount udated successfully");
-							} else {
-								System.out.println("\nCould not update status");
-							};
+								if(service.updateAccountStatus(statusE, account_numberE)!=0) {
+									log.info("\n  Account udated successfully");
+								} else {
+									log.info("\n  Could not update status");
+								};
 						
-						}catch (BusinessException e) {
-							System.out.println(e.getMessage());
+							}catch (BusinessException e) {
+								log.info(e.getMessage());
+							}
+						break;
+//--3.4-------------------------------See all transactions  -------------------------------	
+						case 4:
+							log.info("See you soon");
+						
+						break;
+						
+//-3.5-------------------------------------------Exit-------------------------------------	
+						case 5:
+							log.info("See you soon");
+						
+						break;
+						
+						default:
+							log.info("Invalid menu option.Please try again!");
+						break;
 						}
-					break;
-						
-//------------------------------------Exit-------------------------------------	
-					case 4:
-						System.out.println("See you soon");
-						
-						break;
-						
-					default:
-						System.out.println("Invalid menu option... Kindly Retry................!!!!");
-						break;
-					}
-				} while (chE != 5);
-						
-				break;
-				
+					} while (chE != 5);
+				} else {
+					log.info("Wrong employee id or password");
+				}
+			} catch (BusinessException e) {
+				log.info(e.getMessage());
+				}
+					
 			default:
-				System.out.println("Invalid menu option... Kindly Retry................!!!!");
+				log.info("Invalid menu option.Please try again!");
 				break;
 			}
 		} while (ch != 4);
 	}
 }
+		
+	
 
 //		CustomerDAO dao = new CustomerDAOImpl();
 //		
@@ -578,10 +648,10 @@ public class BankMain {
 //		
 //		try {
 //			if(dao.createCustomer(cust)!=0) {
-//				System.out.println("Customer created successfully");
+//				log.info("Customer created successfully");
 //			}
 //		} catch (BusinessException e) {
-//			System.out.println(e.getMessage());
+//			log.info(e.getMessage());
 //			
 //		}
 //		
@@ -592,11 +662,11 @@ public class BankMain {
 //		try {
 //			Customer customer= dao.getCustomerById(70032);
 //			if(customer!=null) {
-//				System.out.println("\nDetails of customerwith id "+customer.getId());
-//				System.out.println(customer);
+//				log.info("\nDetails of customerwith id "+customer.getId());
+//				log.info(customer);
 //			}
 //		} catch (BusinessException e) {
-//			System.out.println(e);
+//			log.info(e);
 //		}}}
 //		
 //

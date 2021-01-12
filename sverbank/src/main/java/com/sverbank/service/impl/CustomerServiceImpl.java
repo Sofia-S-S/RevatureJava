@@ -1,16 +1,26 @@
 package com.sverbank.service.impl;
 
 import java.util.List;
+import java.util.Scanner;
+
+import org.apache.log4j.Logger;
 
 import com.sverbank.dao.CustomerDAO;
 import com.sverbank.dao.impl.CustomerDAOImpl;
 import com.sverbank.exeption.BusinessException;
+import com.sverbank.main.BankMain;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Employee;
 import com.sverbank.service.CustomerService;
 
+
 public class CustomerServiceImpl implements CustomerService{
+	
+	Scanner sc = new Scanner(System.in);
+	
+	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
 	
 	private CustomerDAO customerDAO = new CustomerDAOImpl();
 
@@ -35,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService{
 					}
 				} else {
 					throw new BusinessException("Entered Gender "+customer.getGender()+" is INVALID");
+
 				}
 			} else {
 				throw new BusinessException("Entered Last Name "+customer.getLast_name()+" is INVALID");
@@ -69,17 +80,7 @@ public class CustomerServiceImpl implements CustomerService{
 		return x;
 	}
 
-	@Override
-	public CustomerLogin letCustomerLogin(String login, String password) throws BusinessException {
-		CustomerLogin customer_login =null;
-		if(login.matches("[a-zA-Z1-9]{4,12}")&& password.matches("[a-zA-Z1-9]{4,12}")) {
-			System.out.println("letCustomerLogin service passed");
-			customer_login =customerDAO.letCustomerLogin(login, password);
-		}else {
-			throw new BusinessException("Entered loging or password is INVALID");
-		}
-		return customer_login;
-	}
+
 
 	@Override
 	public List<Account> getAccountsById(int customer_id) throws BusinessException {
@@ -152,6 +153,8 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		return up;
 	}
+
+
 
 
 

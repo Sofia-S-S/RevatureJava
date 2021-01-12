@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.sverbank.dao.impl.CustomerDAOImpl;
 import com.sverbank.exeption.BusinessException;
-import com.sverbank.model.Customer;
 import com.sverbank.service.AppService;
 
 public class AppMockitoTest {
@@ -34,17 +33,22 @@ public class AppMockitoTest {
     	
     	boolean got = appService.getCustomerBySSN(884645367L);
     	assertEquals(true, got);
+    	boolean got2 = appService.getCustomerBySSN(8846453L);
+    	assertEquals(false, got2);
     	
-        verify(dbMock, times(1)).getCustomerBySSN(884645367L); 
-		
+    	verify(dbMock, times(1)).getCustomerBySSN(884645367L); 
+    	
+    	verify(dbMock, times(1)).getCustomerBySSN(8846453L); 
 	}
+    
+
     
     @Test
 	public void approveTransfer() throws BusinessException {
     	
-    	boolean approved = appService.approveTransfer(1700, 7213068361L, 16);
+    	boolean approved = appService.approveTransfer(1700, 7213068361L, 1600000L, "ApprovedTransfer");
     	assertEquals(true, approved);
     	
-    	verify(dbMock, times(1)).approveTransfer(1700, 7213068361L, 16);
+    	verify(dbMock, times(1)).approveTransfer(1700, 7213068361L, 1600000L, "ApprovedTransfer");
     }
 }

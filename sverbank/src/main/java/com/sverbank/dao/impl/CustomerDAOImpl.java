@@ -7,16 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.sverbank.dao.dbutil.PostresqlConnection;
 import com.sverbank.exeption.BusinessException;
+import com.sverbank.main.BankMain;
 import com.sverbank.dao.CustomerDAO;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Transfer;
-
+import com.sverbank.model.Employee;
+import com.sverbank.model.Transaction;
 
 public class CustomerDAOImpl implements CustomerDAO {
+	
+	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
 
 	@Override
 	public int createCustomer(Customer customer) throws BusinessException {
@@ -159,38 +164,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return c;
 	}
 	
-//-------------------------------get id after customer logged in---------------------------
 
-	@Override
-	public CustomerLogin letCustomerLogin(String login, String password) throws BusinessException {
-		CustomerLogin customer_login = null;
-		
-		try (Connection connection = PostresqlConnection.getConnection()) {
-			String sql = "select customer_id from sverbank.customer_login where login=? AND password=?";
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, login);
-			preparedStatement.setString(2, password);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			System.out.println("Query Executed");
-			if (resultSet.next()) {
-				System.out.println("If in DAO");
-				customer_login = new CustomerLogin();
-				customer_login.setLogin(login);
-				customer_login.setPassword(password);
-				customer_login.setCustomer_id(resultSet.getInt("customer_id"));
-
-			} else {
-				System.out.println("else in dao");
-				throw new BusinessException("Wrong login or password");
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("exception in DAO");
-			System.out.println(e); // Take off this line when app is live
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
-		}
-		
-		return customer_login;
-	}
 	
 //---------------------get all accounts of one Customer by id-----------------------------------	
 
@@ -312,16 +286,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 			return account;
 		}
 	@Override
-	public int createTransfer(Transfer transfer) throws BusinessException {
+	public int createTransaction(Transaction transaction) throws BusinessException {
 		int t = 0;
 		try (Connection connection=PostresqlConnection.getConnection()){
 			
-			String sql="insert into sverbank.transfer (sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?)";
+			String sql="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setLong(1, transfer.getSender_acc_num());
-			preparedStatement.setLong(2, transfer.getReceiver_acc_num());
-			preparedStatement.setDouble(3, transfer.getAmount());
-			preparedStatement.setDate(4, new java.sql.Date(transfer.getDate().getTime()));
+			preparedStatement.setString(1, transaction.getType());
+			preparedStatement.setLong(2, transaction.getSender_acc_num());
+			preparedStatement.setLong(3, transaction.getReceiver_acc_num());
+			preparedStatement.setDouble(4, transaction.getAmount());
+			preparedStatement.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
 			
 			t = preparedStatement.executeUpdate();
 			
@@ -335,12 +310,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void sendMoney(Transfer transfer, long account_number, double newBalance) throws BusinessException {
+	public void createTransactionTransfer(Transaction transaction, long account_number, double newBalance) throws BusinessException {
 
 		try (Connection connection=PostresqlConnection.getConnection()){
 			
 			String updateBalance ="update sverbank.account set balance=? where account_number=?";
-			String createTransfer ="insert into sverbank.transfer (sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?)";
+			String createTransfer ="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
 			
 			PreparedStatement preparedStatementBalance=connection.prepareStatement(updateBalance);
 			PreparedStatement preparedStatementTransfer=connection.prepareStatement(createTransfer);
@@ -351,10 +326,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 			preparedStatementBalance.setLong(2, account_number);
 			preparedStatementBalance.executeUpdate();
 			
-			preparedStatementTransfer.setLong(1, transfer.getSender_acc_num());
-			preparedStatementTransfer.setLong(2, transfer.getReceiver_acc_num());
-			preparedStatementTransfer.setDouble(3, transfer.getAmount());
-			preparedStatementTransfer.setDate(4, new java.sql.Date(transfer.getDate().getTime()));
+			preparedStatementTransfer.setString(1, transaction.getType());
+			preparedStatementTransfer.setLong(2, transaction.getSender_acc_num());
+			preparedStatementTransfer.setLong(3, transaction.getReceiver_acc_num());
+			preparedStatementTransfer.setDouble(4, transaction.getAmount());
+			preparedStatementTransfer.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
 			preparedStatementTransfer.executeUpdate();
 			
 			connection.commit(); // !!!
@@ -369,24 +345,25 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void approveTransfer(double newBalance, long receiver_acc_num, int transfer_id) throws BusinessException {
+	public void approveTransfer(double newBalance, long receiver_acc_num, long transaction_id, String type) throws BusinessException {
 
 		try (Connection connection=PostresqlConnection.getConnection()){
 			
 			String updateBalance ="update sverbank.account set balance=? where account_number=?";
-			String deleteTransfer ="delete from sverbank.transfer where transfer_id=? and receiver_acc_num=?";
+			String deleteTransfer ="update sverbank.transaction set type=? where transaction_id=? and receiver_acc_num=?";
 			
 			PreparedStatement preparedStatementBalance=connection.prepareStatement(updateBalance);
 			PreparedStatement preparedStatementTransfer=connection.prepareStatement(deleteTransfer);
 			
 			connection.setAutoCommit(false); // !!!
-			
+
 			preparedStatementBalance.setDouble(1, newBalance);
 			preparedStatementBalance.setLong(2, receiver_acc_num);
 			preparedStatementBalance.executeUpdate();
 			
-			preparedStatementTransfer.setInt(1, transfer_id);
-			preparedStatementTransfer.setLong(2, receiver_acc_num);
+			preparedStatementTransfer.setString(1, type);
+			preparedStatementTransfer.setLong(2, transaction_id);
+			preparedStatementTransfer.setLong(3, receiver_acc_num);
 			preparedStatementTransfer.executeUpdate();
 			
 			connection.commit(); // !!!
@@ -401,17 +378,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Transfer> getTtransfersByAccNumber(long receiver_acc_num) throws BusinessException {
-		List<Transfer> transfersList=new ArrayList<>();
+	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num) throws BusinessException {
+		List<Transaction> transfersList=new ArrayList<>();
 		try (Connection connection = PostresqlConnection.getConnection()) {
-			String sql="select transfer_id, sender_acc_num, amount, date from sverbank.transfer where receiver_acc_num = ?";
+			String sql="select transaction_id, sender_acc_num, amount, date from sverbank.transaction where type ='transfer' and receiver_acc_num = ?";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setLong(1, receiver_acc_num);
+
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()) {
-				Transfer transfer =new Transfer();
+				Transaction transfer =new Transaction();
 				transfer.setReceiver_acc_num(receiver_acc_num);
-				transfer.seTtransfer_id(resultSet.getInt("transfer_id"));
+				transfer.setTransaction_id(resultSet.getLong("transaction_id"));
 				transfer.setSender_acc_num(resultSet.getLong("sender_acc_num"));
 				transfer.setAmount(resultSet.getDouble("amount"));
 				transfer.setDate(resultSet.getDate("date"));
@@ -429,30 +407,35 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public Transfer getTransferById(int transfer_id) throws BusinessException {
-		Transfer transfer=null;
+	public Transaction getTransactionById(long transaction_id) throws BusinessException {
+		Transaction transaction=null;
 		try (Connection connection = PostresqlConnection.getConnection()) {
-			String sql = "select receiver_acc_num, sender_acc_num, amount, date from sverbank.transfer where transfer_id=?";
+			String sql = "select type, receiver_acc_num, sender_acc_num, amount, date from sverbank.transaction where transaction_id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, transfer_id);
+			preparedStatement.setLong(1, transaction_id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				transfer = new Transfer();
-				transfer.setSender_acc_num(resultSet.getLong("receiver_acc_num"));
-				transfer.setReceiver_acc_num(resultSet.getLong("receiver_acc_num"));
-				transfer.setAmount(resultSet.getDouble("amount"));
-				transfer.setDate(resultSet.getDate("date"));
+				transaction = new Transaction();
+				transaction.setType(resultSet.getString("type"));
+				transaction.setTransaction_id(transaction_id);
+				transaction.setSender_acc_num(resultSet.getLong("receiver_acc_num"));
+				transaction.setReceiver_acc_num(resultSet.getLong("receiver_acc_num"));
+				transaction.setAmount(resultSet.getDouble("amount"));
+				transaction.setDate(resultSet.getDate("date"));
 
 			} else {
-				System.out.println("getTransferById DAO fail");
-				throw new BusinessException("No trunsfer found with id "+transfer_id);
+				System.out.println("No trunsfer found with id "+transaction_id);
+				throw new BusinessException("No trunsfer found with id "+transaction_id);
 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
+			System.out.println(e);
+			throw new BusinessException("Internal error occured contact SYSADMIN getTransactionById");
 		}
-		return transfer;
+		return transaction;
 	}
+
+
 
 
 
