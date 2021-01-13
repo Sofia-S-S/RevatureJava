@@ -6,24 +6,28 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Transaction;
 
 
 public interface CustomerService {
+	
+	//-------------------create Customer profile, Login, Apply for account ---------------------------
 	public int createCustomer(Customer customer) throws BusinessException;
-
-
-
-	public List<Account> getAccountsById(int customer_id) throws BusinessException;
-
-	public Account getAccountByNumber(long account_number) throws BusinessException;
-//	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException;
-
-
+	public int createAccount (Account account) throws BusinessException;
 	public int createLogin(CustomerLogin customer_login) throws BusinessException;
-	
 
 	
-//	public Account updateAccountStatus(String status,long account_number) throws BusinessException; // no DAO
+   //-------------------get One Account / All accounts ----------------------------------
+	public List<Account> getAccountsById(int customer_id) throws BusinessException;
+	
+	public Account getAccountByNumber(long account_number) throws BusinessException;
+	
+	
+	//---------------------get One transfer / all transfers (awaiting) -------------------
 
-//	public int createTransfer(Transfer transfer)throws BusinessException;
+	public Transaction getTransactionById(long transaction_id) throws BusinessException;
+	
+	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num)throws BusinessException;
+
+
 }

@@ -1,1 +1,164 @@
-      
+          
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 00:55:56           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 01:08:20           
+{INFO }  com.sverbank.main.BankMain                  Enter your LOGIN                                  13-Jan-2021 Wednesday CST 01:08:26           
+{INFO }  com.sverbank.main.BankMain                  Enter your PASSWORD                               13-Jan-2021 Wednesday CST 01:08:28           
+{INFO }  com.sverbank.main.BankMain                	Hello ANNA.  Your accounts:                        13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1300.0                   13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $5700.0                   13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 01:08:30           
+{INFO }  com.sverbank.main.BankMain                  Enter account number you would like to send money from)   13-Jan-2021 Wednesday CST 01:08:43           
+{INFO }  com.sverbank.main.BankMain                  Enter recipient account number)                   13-Jan-2021 Wednesday CST 01:08:45           
+{INFO }  com.sverbank.main.BankMain                  How much money would you like to send             13-Jan-2021 Wednesday CST 01:09:25           
+{INFO }  com.sverbank.main.BankMain                  Money send successfully. Wait fot recipient to approve transfer  13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 01:09:31           
+{INFO }  com.sverbank.main.BankMain                  Enter account number you would like to send money from)   13-Jan-2021 Wednesday CST 01:12:03           
+{INFO }  com.sverbank.main.BankMain                  Enter recipient account number)                   13-Jan-2021 Wednesday CST 01:12:22           
+{INFO }  com.sverbank.main.BankMain                  How much money would you like to send             13-Jan-2021 Wednesday CST 01:12:53           
+{INFO }  com.sverbank.main.BankMain                  Money send successfully. Wait fot recipient to approve transfer  13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 01:12:59           
+{INFO }  com.sverbank.main.BankMain                  Enter account number you would like to send money from)   13-Jan-2021 Wednesday CST 01:15:00           
+{INFO }  com.sverbank.main.BankMain                  Enter recipient account number)                   13-Jan-2021 Wednesday CST 01:15:11           
+{INFO }  com.sverbank.main.BankMain                  How much money would you like to send             13-Jan-2021 Wednesday CST 01:15:21           
+{INFO }  com.sverbank.main.BankMain                  Money send successfully. Wait fot recipient to approve transfer  13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 01:15:25           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:05:44           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 02:05:49           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 02:05:56           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1100.0                   13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 02:05:59           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:10:19           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 02:10:23           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 02:10:33           
+{INFO }  com.sverbank.main.BankMain                Wrong login or password                             13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:10:37           
+{INFO }  com.sverbank.main.BankMain                Enter your FIRST NAME                               13-Jan-2021 Wednesday CST 02:10:46           
+{INFO }  com.sverbank.main.BankMain                nter your LAST NAME                                 13-Jan-2021 Wednesday CST 02:11:04           
+{INFO }  com.sverbank.main.BankMain                Enter F or M for your gender                        13-Jan-2021 Wednesday CST 02:11:15           
+{INFO }  com.sverbank.main.BankMain                Enter your DOB in format yyyy-dd-mm                 13-Jan-2021 Wednesday CST 02:11:17           
+{INFO }  com.sverbank.main.BankMain                Enter your SSN (9 digits without space)             13-Jan-2021 Wednesday CST 02:11:35           
+{INFO }  com.sverbank.main.BankMain                Enter your ADDRESS                                  13-Jan-2021 Wednesday CST 02:11:42           
+{INFO }  com.sverbank.main.BankMain                Enter your PHONE number(10 digits without space)    13-Jan-2021 Wednesday CST 02:12:03           
+{INFO }  com.sverbank.main.BankMain                Enter new LOGIN (4-12 characters                    13-Jan-2021 Wednesday CST 02:12:12           
+{INFO }  com.sverbank.main.BankMain                Enter new PASSWORD (4-12 characters                 13-Jan-2021 Wednesday CST 02:12:38           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:17:40           
+{INFO }  com.sverbank.main.BankMain                Enter your FIRST NAME                               13-Jan-2021 Wednesday CST 02:17:57           
+{INFO }  com.sverbank.main.BankMain                nter your LAST NAME                                 13-Jan-2021 Wednesday CST 02:18:28           
+{INFO }  com.sverbank.main.BankMain                Enter F or M for your gender                        13-Jan-2021 Wednesday CST 02:18:32           
+{INFO }  com.sverbank.main.BankMain                Enter your DOB in format yyyy-dd-mm                 13-Jan-2021 Wednesday CST 02:18:33           
+{INFO }  com.sverbank.main.BankMain                Enter your SSN (9 digits without space)             13-Jan-2021 Wednesday CST 02:18:47           
+{INFO }  com.sverbank.main.BankMain                Enter your ADDRESS                                  13-Jan-2021 Wednesday CST 02:18:53           
+{INFO }  com.sverbank.main.BankMain                Enter your PHONE number(10 digits without space)    13-Jan-2021 Wednesday CST 02:19:30           
+{INFO }  com.sverbank.main.BankMain                Enter new LOGIN (4-12 characters)                   13-Jan-2021 Wednesday CST 02:19:36           
+{INFO }  com.sverbank.main.BankMain                Enter new PASSWORD (4-12 characters)                13-Jan-2021 Wednesday CST 02:19:44           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:20:24           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                       EMPLOYEE MENU                                13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (1)  Customer registration                        13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (2)  List of accounts by status                   13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (3)  Change status of an account                  13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (4)  List of transactions                         13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (5)  List of customers                            13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (6)  Find a customer                              13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                  (7)  EXIT                                         13-Jan-2021 Wednesday CST 02:20:28           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 02:23:37           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 02:23:37           

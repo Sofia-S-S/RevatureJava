@@ -11,36 +11,23 @@ import com.sverbank.model.Transaction;
 
 public interface CustomerDAO {
 	
-	//---------------------------customerDAO---------------------------------
+	//-------------------create Customer profile, Login, Apply for account ---------------------------
 	public int createCustomer(Customer customer) throws BusinessException;
 	public int createAccount (Account account) throws BusinessException;
 	public int createLogin(CustomerLogin customer_login) throws BusinessException;
 
 	
-
+   //-------------------get One Account / All accounts ----------------------------------
 	public List<Account> getAccountsById(int customer_id) throws BusinessException;
 	
 	public Account getAccountByNumber(long account_number) throws BusinessException;
-
-
 	
-	//---------------------FinantionalOperetion-----------------------------------
-	public int cashOperation(Transaction transaction, long account_number, double newBalance) throws BusinessException;
-
-	public void createTransactionTransfer (Transaction transfer,long account_number, double newBalance ) throws BusinessException ;
-	public void processTransfer(double newBalance,long account_number, long transaction_id, String type) throws BusinessException;
 	
+	//---------------------get One transfer / all transfers (awaiting) -------------------
 
 	public Transaction getTransactionById(long transaction_id) throws BusinessException;
 	
 	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num)throws BusinessException;
-
-	//------------------------Employee-------------------------------
-	
-
-	
-
-
 
 
 }

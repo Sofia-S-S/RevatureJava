@@ -19,10 +19,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public Customer getCustomerById(int id) throws BusinessException {
 		Customer customer = null;
 		if (id > 1000 && id < 100000) {
-			System.out.println("getCustomerById service passed");
+
 			customer = adminDAO.getCustomerById(id);
 		} else {
-			System.out.println("getCustomerById service failed");
+
 			throw new BusinessException("Customer Id " + id + " is INVALID......");
 		}
 		return customer;
@@ -32,10 +32,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public Customer getCustomerBySSN(long ssn) throws BusinessException {
 		Customer customer = null;
 		if (ssn > 100000000 && ssn < 999999999) {
-			System.out.println("getCustomerById service passed");
+
 			customer = adminDAO.getCustomerBySSN(ssn);
 		} else {
-			System.out.println("getCustomerById service failed");
+
 			throw new BusinessException("Customer Id " + ssn + " is INVALID......");
 		}
 		return customer;
@@ -58,10 +58,10 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public List<Account> getAccountsByStatus(String status) throws BusinessException {
 		List<Account> accountsList = null;
 		if (status.equals("active"))  {
-			System.out.println("getAccountsById service passed");
+
 			accountsList = adminDAO.getAccountsByStatus(status);
 		} else if (status.equals("pending")){
-			System.out.println("getAccountsById service passed");
+
 			accountsList = adminDAO.getAccountsByStatus(status);
 			} else {
 				throw new BusinessException("Status " + status + " is INVALID");
@@ -74,11 +74,11 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public int updateAccountStatus(String status, long account_number) throws BusinessException {
 		int up=0;
 		if(status.equals("active") && account_number>1000000000L && account_number<9999999999L) {
-			System.out.println("getAccountByNumber service passed");
+
 			adminDAO.updateAccountStatus(status, account_number);
 			up++;
 		}else if(status.equals("pending") && account_number>1000000000L && account_number<9999999999L) {
-			System.out.println("getAccountByNumber service passed");
+
 			adminDAO.updateAccountStatus(status, account_number);
 			up++;
 		}else {

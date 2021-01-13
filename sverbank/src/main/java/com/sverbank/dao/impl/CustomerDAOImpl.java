@@ -22,6 +22,8 @@ import com.sverbank.model.Transaction;
 public class CustomerDAOImpl implements CustomerDAO {
 	
 	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
+	
+//===================================== CREATE ======================================================
 
 	@Override
 	public int createCustomer(Customer customer) throws BusinessException {
@@ -49,7 +51,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 		}
 		return c;
 	}
-
 
 	@Override
 	public int createAccount(Account account) throws BusinessException {
@@ -96,9 +97,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return c;
 	}
 	
-
+//================================= GET Accounts ========================================================
 	
-//---------------------get all accounts of one Customer by id-----------------------------------	
+	//---------------------get all accounts of one Customer by id-----------------------------------	
 
 	@Override
 	public List<Account> getAccountsById(int customer_id) throws BusinessException {
@@ -126,7 +127,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 		}
 		return accountsList;
 	}
-
 
 
 	// ------------------------get one account by account number------------------------------------------
@@ -157,114 +157,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 
-	// ------------------------update balance ( add/ withdraw)------------------------------------------
 
-		@Override
-		public int cashOperation(Transaction transaction, long account_number, double newBalance) throws BusinessException {
-		int xy = 0;
-			try (Connection connection=PostresqlConnection.getConnection()){	
-				
-			String sqlAccount="update sverbank.account set balance=? where account_number=?";
-			String sqlTransaction="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
-			
-			PreparedStatement preparedStatementAccount=connection.prepareStatement(sqlAccount);
-			PreparedStatement preparedStatementTransaction=connection.prepareStatement(sqlTransaction);
-			
-			connection.setAutoCommit(false); // !!!
+//==================================== GET Transactions =============================================
 
-			preparedStatementAccount.setDouble(1, newBalance);
-			preparedStatementAccount.setLong(2, account_number);
-			int x = preparedStatementAccount.executeUpdate();
-			
-			preparedStatementTransaction.setString(1, transaction.getType());
-			preparedStatementTransaction.setLong(2, transaction.getSender_acc_num());
-			preparedStatementTransaction.setLong(3, transaction.getReceiver_acc_num());
-			preparedStatementTransaction.setDouble(4, transaction.getAmount());
-			preparedStatementTransaction.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
-			int y = preparedStatementTransaction.executeUpdate();
-			
-			connection.commit(); // !!!
-			xy = x+y;
-			
-			} catch (ClassNotFoundException | SQLException e) {
-				log.info(e);//take off this lane when app is live
-			
-				throw new BusinessException("Some internal error occured. Please contact admin");
-				
-			}
-			return xy;
-			
-		}
-
-
-	@Override
-	public void createTransactionTransfer(Transaction transaction, long account_number, double newBalance) throws BusinessException {
-
-		try (Connection connection=PostresqlConnection.getConnection()){
-			
-			String updateBalance ="update sverbank.account set balance=? where account_number=?";
-			String createTransfer ="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
-			
-			PreparedStatement preparedStatementBalance=connection.prepareStatement(updateBalance);
-			PreparedStatement preparedStatementTransfer=connection.prepareStatement(createTransfer);
-			
-			connection.setAutoCommit(false); // !!!
-			
-			preparedStatementBalance.setDouble(1, newBalance);
-			preparedStatementBalance.setLong(2, account_number);
-			preparedStatementBalance.executeUpdate();
-			
-			preparedStatementTransfer.setString(1, transaction.getType());
-			preparedStatementTransfer.setLong(2, transaction.getSender_acc_num());
-			preparedStatementTransfer.setLong(3, transaction.getReceiver_acc_num());
-			preparedStatementTransfer.setDouble(4, transaction.getAmount());
-			preparedStatementTransfer.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
-			preparedStatementTransfer.executeUpdate();
-			
-			connection.commit(); // !!!
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			log.info(e);
-			
-			throw new BusinessException("Some internal error occured. Please contact admin");
-		}
-
-	}
-
-	@Override
-	public void processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
-
-		try (Connection connection=PostresqlConnection.getConnection()){
-			
-			String updateBalance ="update sverbank.account set balance=? where account_number=?";
-			String deleteTransfer ="update sverbank.transaction set type=? where transaction_id=? ";
-			
-			PreparedStatement preparedStatementBalance=connection.prepareStatement(updateBalance);
-			PreparedStatement preparedStatementTransfer=connection.prepareStatement(deleteTransfer);
-			
-			connection.setAutoCommit(false); // !!!
-
-			preparedStatementBalance.setDouble(1, newBalance);
-			preparedStatementBalance.setLong(2, account_number);
-			preparedStatementBalance.executeUpdate();
-			
-			preparedStatementTransfer.setString(1, type);
-			preparedStatementTransfer.setLong(2, transaction_id);
-			preparedStatementTransfer.executeUpdate();
-			
-			connection.commit(); // !!!
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			log.info(e);
-			
-			throw new BusinessException("Some internal error occured. Please contact admin");
-			}
-		
-	}
-
-
+	// ------------------------get one transaction by id-----------------------------------------
 
 	@Override
 	public Transaction getTransactionById(long transaction_id) throws BusinessException {
@@ -295,18 +191,36 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return transaction;
 	}
 
+	// ------------------------get all pending transfers for an one account -----------------------------------
 
 	@Override
 	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Transaction> transfersList=new ArrayList<>();
+		try (Connection connection = PostresqlConnection.getConnection()) {
+			String sql="select transaction_id, sender_acc_num, amount, date from sverbank.transaction where type ='transfer' and receiver_acc_num = ?";
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setLong(1, receiver_acc_num);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Transaction transfer =new Transaction();
+				transfer.setReceiver_acc_num(receiver_acc_num);
+				transfer.setTransaction_id(resultSet.getLong("transaction_id"));
+				transfer.setSender_acc_num(resultSet.getLong("sender_acc_num"));
+				transfer.setAmount(resultSet.getDouble("amount"));
+				transfer.setDate(resultSet.getDate("date"));
+				transfersList.add(transfer);
+			}
+			if(transfersList.size()==0)
+			{
+				throw new BusinessException("No awaiting transfers found for account number "+receiver_acc_num);
+			}
+		}catch (ClassNotFoundException | SQLException e) {
+			log.info(e); // Take off this line when app is live
+			throw new BusinessException("Internal error occured contact SYSADMIN ");
+		}
+		return transfersList;
 	}
-
-
-
-
-
-
 
 
 
