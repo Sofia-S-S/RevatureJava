@@ -320,3 +320,298 @@
 {INFO }  com.sverbank.main.BankMain                  (5)  List of customers                            13-Jan-2021 Wednesday CST 10:47:40           
 {INFO }  com.sverbank.main.BankMain                  (6)  Find a customer                              13-Jan-2021 Wednesday CST 10:47:40           
 {INFO }  com.sverbank.main.BankMain                  (7)  EXIT                                         13-Jan-2021 Wednesday CST 10:47:40           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:22:15           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 11:22:20           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 11:22:23           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1100.0                   13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:22:25           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:33:43           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 11:33:49           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 11:33:54           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1100.0                   13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:33:58           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:34:30           
+{INFO }  com.sverbank.main.BankMain                No awaiting transfers found for account number 1099321045  13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:34:35           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:34:52           
+{INFO }  com.sverbank.main.BankMain                No awaiting transfers found for account number 6930591909  13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:34:55           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:42:17           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 11:42:21           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 11:42:23           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1100.0                   13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:42:31           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:43:11           
+{INFO }  com.sverbank.main.BankMain                Your awaiting trunsfers                             13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                $100.0 | from: 7786194190 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:43:16           
+{INFO }  com.sverbank.main.BankMain                Money trunsfered to your account sccessfully        13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                Availible balance is $1200.0                        13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:43:29           
+{INFO }  com.sverbank.main.BankMain                Money trunsfered to your account sccessfully        13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                Availible balance is $1300.0                        13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:43:40           
+{INFO }  com.sverbank.main.BankMain                Money trunsfered to your account sccessfully        13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                Availible balance is $1400.0                        13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:43:46           
+{INFO }  com.sverbank.main.BankMain                Money returned to sender sccessfully                13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                $200.0 | from: 7213068361 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:44:32           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:46:14           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:48:25           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 11:48:27           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 11:48:29           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1400.0                   13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:48:32           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:48:36           
+{INFO }  com.sverbank.main.BankMain                Awaiting transfer :                                 13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                $200.0 | from: 7213068361 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:48:48           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:48:54           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:49:37           
+{INFO }  com.sverbank.main.BankMain                Awaiting transfer :                                 13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                $200.0 | from: 7213068361 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:49:41           
+{INFO }  com.sverbank.main.BankMain                Money trunsfered to your account sccessfully        13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                Availible balance is $1600.0                        13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:49:44           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:50:30           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                    WELCOME TO SVERBANK                             13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                ==============================                      13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                  (1) Log in to my account                          13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                  (2) New Customer                                  13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                  (3) Employee log in                               13-Jan-2021 Wednesday CST 11:51:28           
+{INFO }  com.sverbank.main.BankMain                Enter your LOGIN                                    13-Jan-2021 Wednesday CST 11:51:32           
+{INFO }  com.sverbank.main.BankMain                Enter your PASSWORD                                 13-Jan-2021 Wednesday CST 11:51:35           
+{INFO }  com.sverbank.main.BankMain                Hello ANNA.  Your accounts:                         13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                7954958735  |  pending  |  $600.0                   13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                1099321045  |  active  |  $4910.0                   13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                6930591909  |  active  |  $1600.0                   13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:51:37           
+{INFO }  com.sverbank.main.BankMain                Enter your account number                           13-Jan-2021 Wednesday CST 11:52:03           
+{INFO }  com.sverbank.main.BankMain                Awaiting transfer :                                 13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                $100.0 | from: 7786194190 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:52:06           
+{INFO }  com.sverbank.main.BankMain                Awaiting transfer :                                 13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                $200.0 | from: 7213068361 | on 2021-01-13           13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                --------------------------------------              13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                  (1) Accept transfer                               13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                  (2) Decline trunsfer                              13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                  (3) Exit /NEXT transfer                           13-Jan-2021 Wednesday CST 11:52:12           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 11:52:21           
+{INFO }  com.sverbank.main.BankMain                Enter account number you would like to send money from)   13-Jan-2021 Wednesday CST 12:02:28           
+{INFO }  com.sverbank.main.BankMain                Enter recipient account number)                     13-Jan-2021 Wednesday CST 12:02:42           
+{INFO }  com.sverbank.main.BankMain                You can not send money to the same account          13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 12:02:49           
+{INFO }  com.sverbank.main.BankMain                Enter your account number )                         13-Jan-2021 Wednesday CST 12:02:55           
+{INFO }  com.sverbank.main.BankMain                How much money would you like to withdraw           13-Jan-2021 Wednesday CST 12:02:58           
+{INFO }  com.sverbank.main.BankMain                Money withdrawed successfully. Availible balance is: $ 1400.0  13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 12:03:03           
+{INFO }  com.sverbank.main.BankMain                Enter your account number)                          13-Jan-2021 Wednesday CST 12:03:09           
+{INFO }  com.sverbank.main.BankMain                How much money would you like to add                13-Jan-2021 Wednesday CST 12:03:13           
+{INFO }  com.sverbank.main.BankMain                Funds added successfully. Availible balance is: $ 1700.0  13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                                                                    13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                     CUSTOMER MENU                                  13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                ===========================                         13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (1) Withdraw money                                13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (2) Add funds                                     13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (3) Send money                                    13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (4) Receive money                                 13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (5) Apply for new account                         13-Jan-2021 Wednesday CST 12:03:19           
+{INFO }  com.sverbank.main.BankMain                  (6)	EXIT                                          13-Jan-2021 Wednesday CST 12:03:19           

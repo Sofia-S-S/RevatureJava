@@ -23,9 +23,9 @@ public class TransactionServiceImpl implements TransactionService{
 	}
 
 	@Override
-	public void processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
-		transDAO.processTransfer(newBalance, account_number, transaction_id, type);
-		
+	public int processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
+		int x =transDAO.processTransfer(newBalance, account_number, transaction_id, type);
+		return x;
 	}
 
 }

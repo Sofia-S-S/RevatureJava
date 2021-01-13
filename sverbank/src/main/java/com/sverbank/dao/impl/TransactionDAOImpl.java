@@ -87,7 +87,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	// ------------------------update balance and update type of transaction ( accepted / declined ) ------------------------------------------
 	@Override
-	public void processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
+	public int processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
+		
+		int xy =0;
 
 		try (Connection connection=PostresqlConnection.getConnection()){
 			
@@ -101,19 +103,22 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 			preparedStatementBalance.setDouble(1, newBalance);
 			preparedStatementBalance.setLong(2, account_number);
-			preparedStatementBalance.executeUpdate();
+			int x = preparedStatementBalance.executeUpdate();
 			
 			preparedStatementTransfer.setString(1, type);
 			preparedStatementTransfer.setLong(2, transaction_id);
-			preparedStatementTransfer.executeUpdate();
+			int y =preparedStatementTransfer.executeUpdate();
 			
 			connection.commit(); // !!!
+			
+			xy= x+y;
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
 		
 			throw new BusinessException("Some internal error occured. Please contact admin");
 			}
+		return xy;
 		
 	}
 

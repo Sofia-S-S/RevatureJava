@@ -13,6 +13,7 @@ import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
+import com.sverbank.model.Employee;
 import com.sverbank.model.Transaction;
 import com.sverbank.service.AdministrationService;
 import com.sverbank.service.CustomerService;
@@ -243,9 +244,10 @@ public class BankMain {
 									List<Transaction> transfersList = custService.getTtransfersByAccNumber(receiver_acc_num);
 
 										if (transfersList != null) {
-											log.info("Your awaiting trunsfers");
-											log.info("--------------------------------------");
+
 											for (Transaction t : transfersList) {
+												log.info("Awaiting transfer : ");
+												log.info("--------------------------------------");
 												log.info("$"+t.getAmount()+" | from: "+t.getSender_acc_num()+ " | on "+t.getDate());
 												
 												//---------------------transfer menu------------------
@@ -272,15 +274,18 @@ public class BankMain {
 															Double newBalance = balance + amount;
 															String type = "approved transfer";
 															
-															transService.processTransfer(newBalance, receiver_acc_num, transaction_id,type);
+															if(transService.processTransfer(newBalance, receiver_acc_num, transaction_id,type)!=0 && transService.processTransfer(newBalance, receiver_acc_num, transaction_id,type)!=1) {
 															log.info("Money trunsfered to your account sccessfully");
 															log.info("Availible balance is $"+newBalance);
+															} else {
+																log.info("Could not process transfer");
+															}
 															
 														} catch (BusinessException e) {
 															log.info(e.getMessage());
 															
-//														} finally {
-//															chTr=3;
+														} finally {
+															chTr=3;
 														}
 												break;
 												
@@ -292,9 +297,11 @@ public class BankMain {
 															
 															Double newBalance = balance + amount;
 															String type = "declined transfer";
-															transService.processTransfer(newBalance, sender_acccount, transaction_id,type);
+															if(transService.processTransfer(newBalance, sender_acccount, transaction_id,type)>=2) {
 															log.info("Money returned to sender sccessfully");
-													
+														} else {
+															log.info("Could not process transfer");
+														}
 															
 														} catch (BusinessException e) {
 															log.info(e.getMessage());
@@ -456,16 +463,16 @@ public class BankMain {
 //--3----------------------------------Employee--------------------------------------	
 				
 			case 3:
-//				try {
-//				log.info("  Enter your EMPLOYEE ID");
-//				String employee_id=sc.nextLine();
-//				log.info("  Enter your PASSWORD");
-//				String password = sc.nextLine();
-//
-//				Employee employee = loginService.employeeLogin(employee_id, password);
-//				
-//				if (employee !=null) {
-//					log.info("You logged in as "+ employee.getName());
+				try {
+				log.info("Enter your EMPLOYEE ID");
+				String employee_id=sc.nextLine();
+				log.info("Enter your PASSWORD");
+				String password = sc.nextLine();
+
+				Employee employee = loginService.employeeLogin(employee_id, password);
+				
+				if (employee !=null) {
+					log.info("You logged in as "+ employee.getName());
 			
 					int chE = 0;
 				
@@ -737,12 +744,12 @@ public class BankMain {
 						break;
 						}
 					} while (chE != 7);
-//				} else {
-//					log.info("Wrong employee id or password");
-//				}
-//			} catch (BusinessException e) {
-//				log.info(e.getMessage());
-//				}
+				} else {
+					log.info("Wrong employee id or password");
+				}
+			} catch (BusinessException e) {
+				log.info(e.getMessage());
+				}
 					
 			default:
 				log.info("  Invalid menu option.Please try again!");
