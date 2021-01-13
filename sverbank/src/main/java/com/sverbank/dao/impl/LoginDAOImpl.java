@@ -36,7 +36,6 @@ public class LoginDAOImpl implements LoginDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			System.out.println(e);//take off this lane when app is live
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		
 			
@@ -56,22 +55,22 @@ public class LoginDAOImpl implements LoginDAO {
 				preparedStatement.setString(1, login);
 				preparedStatement.setString(2, password);
 				ResultSet resultSet = preparedStatement.executeQuery();
-				System.out.println("Query Executed");
+
 				if (resultSet.next()) {
-					System.out.println("If in DAO");
+
 					customer_login = new CustomerLogin();
 					customer_login.setLogin(login);
 					customer_login.setPassword(password);
 					customer_login.setCustomer_id(resultSet.getInt("customer_id"));
 
 				} else {
-					System.out.println("else in dao");
-					throw new BusinessException("Wrong login or password");
+
+					throw new BusinessException("No customer found with such login or password");
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				System.out.println("exception in DAO");
-				System.out.println(e); // Take off this line when app is live
-				throw new BusinessException("Internal error occured contact SYSADMIN ");
+
+				throw new BusinessException("Internal error occured contact admin ");
 			}
 			
 			return customer_login;

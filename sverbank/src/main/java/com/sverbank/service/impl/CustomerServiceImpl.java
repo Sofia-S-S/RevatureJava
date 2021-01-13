@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public int createLogin(CustomerLogin customer_login) throws BusinessException {
 		int x = 0;
-		if(customer_login.getLogin().matches("[a-zA-Z0-9]{4,12})") && customer_login.getPassword().matches("[a-zA-Z0-9]{4,12})")) {
+		if(customer_login.getLogin().matches("[a-zA-Z0-9]{4,12}") && customer_login.getPassword().matches("[a-zA-Z0-9]{4,12}")) {
 			x = customerDAO.createLogin(customer_login);
 		} else {
 			throw new BusinessException("Login or password is INVALID. Please call bank to complite registration");

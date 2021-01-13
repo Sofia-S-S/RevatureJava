@@ -7,19 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 import com.sverbank.dao.AdministrationDAO;
 import com.sverbank.dao.dbutil.PostresqlConnection;
 import com.sverbank.exeption.BusinessException;
-import com.sverbank.main.BankMain;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.Transaction;
 
 public class AdministrationDAOImpl implements AdministrationDAO {
 	
-	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
 	
 // =====================================GET CUSTOMER===========================================
 	
@@ -49,7 +46,6 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			log.info(e);//take off this lane when app is live
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		} 
 		return customer;
@@ -65,7 +61,7 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 			preparedStatement.setLong(1, ssn);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			if(resultSet.next()){
-				//if we found a player -> instantiate player object and set values to it
+
 				customer = new Customer();
 				customer.setSsn(ssn);
 				customer.setId(resultSet.getInt("id"));
@@ -82,12 +78,11 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			log.info(e);//take off this lane when app is live
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		
 			
 		} 
-		return customer; //always start your code with fixing auto generated return
+		return customer;
 	}
 	
 //======================================LISTS===================================================
@@ -101,7 +96,7 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				//if we found a player -> instantiate player object and set values to it
+
 				Customer customer = new Customer();
 				customer.setId(resultSet.getInt("id"));
 				customer.setFirst_name(resultSet.getString("first_name"));
@@ -119,10 +114,8 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			log.info(e);//take off this lane when app is live
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		
-			
 		} 
 		return customersList;
 	}
@@ -145,10 +138,10 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 				accountsList.add(account);
 
 			} if(accountsList.size()==0) {
-				throw new BusinessException("Wrong status");
+				throw new BusinessException("No accounts fount in a system with status "+status);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			log.info("getAccountsByStatus DAO fail");
+
 			throw new BusinessException("Internal error occured contact SYSADMIN ");
 		}
 		return accountsList;
@@ -177,7 +170,7 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 				throw new BusinessException("There is no transaction in the system");
 			}
 		}catch (ClassNotFoundException | SQLException e) {
-			log.info(e); // Take off this line when app is live
+
 			throw new BusinessException("Internal error occured contact SYSADMIN ");
 		}
 		return transactionsList;
@@ -193,7 +186,7 @@ public class AdministrationDAOImpl implements AdministrationDAO {
 		preparedStatement.setLong(2, account_number);
 		preparedStatement.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
-			log.info(e);//take off this lane when app is live
+
 			throw new BusinessException("Some internal error occured. Please contact admin");
 			
 		}

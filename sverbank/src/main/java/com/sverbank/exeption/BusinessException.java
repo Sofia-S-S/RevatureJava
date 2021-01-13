@@ -6,6 +6,11 @@ public class BusinessException extends Exception {
 	
 	// Source - Generate constructors from superclass: empty() and (String)
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public BusinessException() {
 		super();
 		// TODO Auto-generated constructor stub

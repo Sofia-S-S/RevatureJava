@@ -7,11 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 
 import com.sverbank.dao.dbutil.PostresqlConnection;
 import com.sverbank.exeption.BusinessException;
-import com.sverbank.main.BankMain;
 import com.sverbank.dao.CustomerDAO;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
@@ -21,7 +19,6 @@ import com.sverbank.model.Transaction;
 
 public class CustomerDAOImpl implements CustomerDAO {
 	
-	private static Logger log=Logger.getLogger(BankMain.class);  // Set up log
 	
 //===================================== CREATE ======================================================
 
@@ -45,8 +42,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			log.info(e);
-			
+	
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
 		return c;
@@ -68,7 +64,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
@@ -90,7 +85,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException | NumberFormatException e) {
 			
-			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact Sverbank");
 		}
@@ -122,8 +116,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 				throw new BusinessException("No Accounts found for customer with id "+customer_id);
 			}
 		}catch (ClassNotFoundException | SQLException e) {
-			log.info(e); // Take off this line when app is live
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
+
+			throw new BusinessException("Internal error occured contact admin ");
 		}
 		return accountsList;
 	}
@@ -146,12 +140,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 				account.setBalance(resultSet.getDouble("balance"));
 				account.setStatus(resultSet.getString("status"));
 			} else {
-				log.info("getAccountByNumber DAO fail");
+
 				throw new BusinessException("Wrong account number");
 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
+			throw new BusinessException("Internal error occured contact admin ");
 		}
 		return account;
 	}
@@ -180,12 +174,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 				transaction.setDate(resultSet.getDate("date"));
 
 			} else {
-				log.info("No trunsfer found with id "+transaction_id);
+
 				throw new BusinessException("No trunsfer found with id "+transaction_id);
 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			log.info(e);
+
 			throw new BusinessException("Internal error occured contact SYSADMIN getTransactionById");
 		}
 		return transaction;
@@ -216,8 +210,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 				throw new BusinessException("No awaiting transfers found for account number "+receiver_acc_num);
 			}
 		}catch (ClassNotFoundException | SQLException e) {
-			log.info(e); // Take off this line when app is live
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
+
+			throw new BusinessException("Internal error occured contact admin ");
 		}
 		return transfersList;
 	}

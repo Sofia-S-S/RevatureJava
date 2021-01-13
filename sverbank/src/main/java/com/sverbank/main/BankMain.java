@@ -492,15 +492,15 @@ public class BankMain {
 //--3.1---------------------Employee Register new customer-----status active--------------------------------	
 						case 1:
 
-							log.info("  Enter customer's FIRST NAME");
+							log.info("Enter customer's FIRST NAME");
 							String first_nameE=sc.nextLine();
-							log.info("  Enter customer's LAST NAME");
+							log.info("Enter customer's LAST NAME");
 							String last_nameE=sc.nextLine();
-							log.info("  Enter F or M for customer's gender");
+							log.info("Enter F or M for customer's gender");
 							String genderE=sc.nextLine();
 	
 							// Date formatting
-							log.info("  Ente customer's DATE OF BIRTH in format yyyy-dd-mm");
+							log.info("Enter customer's DATE OF BIRTH in format yyyy-dd-mm");
 							String s = sc.nextLine();
 							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
 							sdf.setLenient(false);
@@ -508,14 +508,14 @@ public class BankMain {
 							try {
 								date = sdf.parse(s);
 							}catch (ParseException e1){
-								log.info("  Invalid date format");
+								log.info("Invalid date format");
 							}
 												
-							log.info("  Enter SSN (9 digits without space))");
+							log.info("Enter SSN (9 digits without space))");
 							Long ssnE = Long.parseLong(sc.nextLine());
-							log.info("  Enter customer's ADDRESS");
+							log.info("Enter customer's ADDRESS");
 							String addressE = sc.nextLine();	
-							log.info("  Enter customer's PHONE number (10 digits without spaces)");
+							log.info("Enter customer's PHONE number (10 digits without spaces)");
 							Long contactE = Long.parseLong(sc.nextLine());
 									
 
@@ -525,9 +525,9 @@ public class BankMain {
 								if(custService.createCustomer(customerE)!=0) {
 									// Get new Customer ID by SSN
 									Customer newCustomerE = adminService.getCustomerBySSN(ssnE);
-									log.info( "  Profile with  ID " + newCustomerE.getId()+" created succsessfully");
+									log.info( "Profile with  ID " + newCustomerE.getId()+" created succsessfully");
 								
-									log.info("   Enter starting balance for an account");
+									log.info("Enter starting balance for an account");
 									Double startBalanceE=sc.nextDouble();
 								
 									// Generate Account Number
@@ -540,54 +540,56 @@ public class BankMain {
 								
 									try {
 										if(custService.createAccount(accountE)!=0) {
-											log.info("  Account"+ accountE.getAccount_number()+" created successfully" );
+											log.info("Account "+ accountE.getAccount_number()+" created successfully" );
 											// Create Login
 											sc.nextLine();
-											log.info("  Enter new LOGIN");
+											log.info("Enter new LOGIN");
 											String loginE = sc.nextLine();
 										
-											log.info("  Enter new PASSWORD");
+											log.info("Enter new PASSWORD");
 											String passwordE = sc.nextLine();
 										
 											CustomerLogin cusomer_loginE= new CustomerLogin(newCustomerE.getId(), loginE, passwordE);
 										
 											try {
 												if(custService.createLogin(cusomer_loginE)!=0) {
-													log.info(" Loginn created successfully");
+													log.info("Login created successfully");
+													break;
 												} else {
-													log.info("  Could not createloginn");
+													log.info("Could not create login");
 												};
 											} catch (BusinessException e) {
 												log.info(e.getMessage());
-											
+												break;
 											}
 										}
 									} catch (BusinessException e) {
 										log.info(e.getMessage());
-									
+										break;
 									}
 								
 
 								}
 							} catch (BusinessException e) {
 								log.info(e.getMessage());
-							
+		
+								break;
 							}
 						
 
 						
-						break;
+
 					
 //--3.2----------------------------------View all accounts by Status-------------------------------------	
 				
 						case 2:
-							log.info("  Enter STATUS");
+							log.info("Enter STATUS");
 							String status = sc.nextLine();
 							try {
 						
 								List<Account> accountsList = adminService.getAccountsByStatus(status);
 								if (accountsList!= null) {
-									log.info("  List of accounts with status:  "+ status);
+									log.info("List of accounts with status:  "+ status);
 									for(Account a : accountsList) {
 										log.info(a);
 									}
@@ -747,6 +749,9 @@ public class BankMain {
 				break;
 			}
 		} while (ch != 4);
+		
+		sc.close(); // avoiding resource leak
+		
 	}
 }
 		

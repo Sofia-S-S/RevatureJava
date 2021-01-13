@@ -43,7 +43,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		} catch (ClassNotFoundException | SQLException e) {
 	
 		
-			throw new BusinessException("  Some internal error occured. Please contact admin");
+			throw new BusinessException("Some internal error occured. Please contact admin");
 			
 		}
 		return xy;
@@ -80,7 +80,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		} catch (ClassNotFoundException | SQLException e) {
 			
 				
-			throw new BusinessException("  Some internal error occured. Please contact admin");
+			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
 
 	}
@@ -112,7 +112,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 		} catch (ClassNotFoundException | SQLException e) {
 			
 		
-			throw new BusinessException("  Some internal error occured. Please contact admin");
+			throw new BusinessException("Some internal error occured. Please contact admin");
 			}
 		
 	}

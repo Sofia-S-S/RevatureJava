@@ -16,7 +16,7 @@ import com.sverbank.dao.impl.CustomerDAOImpl;
 import com.sverbank.dao.impl.LoginDAOImpl;
 import com.sverbank.dao.impl.TransactionDAOImpl;
 import com.sverbank.exeption.BusinessException;
-import com.sverbank.service.AppService;
+import com.sverbank.service.impl.AppServiceImpl;
 
 public class AppMockitoTest {
 	
@@ -26,7 +26,7 @@ public class AppMockitoTest {
     }
 	
     @InjectMocks  
-    AppService appService;
+    AppServiceImpl appService;
   
     @Mock  
 	AdministrationDAOImpl adminMock;
