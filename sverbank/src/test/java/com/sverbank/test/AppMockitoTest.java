@@ -46,9 +46,9 @@ public class AppMockitoTest {
     @Test
 	public void approveTransfer() throws BusinessException {
     	
-    	boolean approved = appService.approveTransfer(1700, 7213068361L, 1600000L, "ApprovedTransfer");
+    	boolean approved = appService.processTransfer(1700, 7213068361L, 1600000L, "approved transfer");
     	assertEquals(true, approved);
     	
-    	verify(dbMock, times(1)).approveTransfer(1700, 7213068361L, 1600000L, "ApprovedTransfer");
+    	verify(dbMock, times(1)).processTransfer(1700, 7213068361L, 1600000L, "approved transfer");
     }
 }

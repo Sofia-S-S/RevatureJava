@@ -3,6 +3,7 @@ package com.sverbank.main;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -11,17 +12,19 @@ import org.apache.log4j.Logger; // import log
 
 
 import com.sverbank.dao.CustomerDAO;
-import com.sverbank.dao.LoginDAO;
+
 import com.sverbank.dao.impl.CustomerDAOImpl;
-import com.sverbank.dao.impl.LoginDAOImpl;
+
 import com.sverbank.exeption.BusinessException;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Employee;
+
 import com.sverbank.model.Transaction;
+import com.sverbank.service.AdministrationService;
 import com.sverbank.service.CustomerService;
 import com.sverbank.service.LoginService;
+import com.sverbank.service.impl.AdministrationServiceImpl;
 import com.sverbank.service.impl.CustomerServiceImpl;
 import com.sverbank.service.impl.LoginServiceImpl;
 
@@ -44,7 +47,11 @@ public class BankMain {
 		
 		CustomerDAO dao = new CustomerDAOImpl();
 		CustomerService service = new CustomerServiceImpl();
-		LoginDAO loginDAO = new LoginDAOImpl();
+		
+
+		AdministrationService adminService = new AdministrationServiceImpl();
+	
+
 		LoginService loginService = new LoginServiceImpl();
 		
 		do {
@@ -73,7 +80,7 @@ public class BankMain {
 				
 					CustomerLogin customer_login = loginService.letCustomerLogin(login, password);
 					int loggedCustomerId = customer_login.getCustomer_id(); // ID of Logged IN Customer
-					Customer customer = service.getCustomerById(customer_login.getCustomer_id());
+					Customer customer = adminService.getCustomerById(customer_login.getCustomer_id());
 					List<Account> accountsList = service.getAccountsById(customer.getId());
 					
 					
@@ -90,7 +97,7 @@ public class BankMain {
 							log.info("\n===========================");
 							log.info("     CUSTOMER MENU");
 							log.info("===========================");
-							log.info("	(1) Withdraw money");
+							log.info("  (1) Withdraw money");
 							log.info("  (2) Add funds");
 							log.info("  (3) Send money");
 							log.info("  (4) Receive money");
@@ -106,6 +113,7 @@ public class BankMain {
 
 							switch (chC) {
 							case 1:
+								
 								try {
 									log.info("	Enter your account number ) ");
 									long account_number = Long.parseLong(sc.nextLine());
@@ -119,12 +127,14 @@ public class BankMain {
 										Account account = service.getAccountByNumber(account_number);
 										if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
 											log.info("	How much money would you like to withdraw");
-											double transfer = Double.parseDouble(sc.nextLine());
+											double withdraw = Double.parseDouble(sc.nextLine());
 											double balance = account.getBalance();
-											double newBalance = balance - transfer;
-											// update account balance
-											Account acc = service.updateAccountBalance(account_number, newBalance);
-											if (acc != null) {
+											double newBalance = balance - withdraw;
+
+											// update account balance and create transaction
+											Transaction transaction = new Transaction("withdraw",account_number,1000000000, withdraw, new Date());
+											int wentThrough = dao.cashOperation(transaction, account_number, newBalance);
+											if (wentThrough!= 0 && wentThrough!=1 ) {
 												log.info("\n  Money withdrawed successfully. Availible balance is: $ "+newBalance);
 											}else {
 												log.info("\n  Could not withdraw money");}
@@ -154,12 +164,13 @@ public class BankMain {
 										Account account = service.getAccountByNumber(account_number);
 										if (account.getCustomer_id()==loggedCustomerId && account.getStatus().equals("active")) {
 											log.info("  How much money would you like to add");
-											double transfer = Double.parseDouble(sc.nextLine());
+											double add = Double.parseDouble(sc.nextLine());
 											double balance = account.getBalance();
-											double newBalance = balance + transfer;
-											// update account balance
-											Account acc = service.updateAccountBalance(account_number, newBalance);
-											if (acc != null) {
+											double newBalance = balance + add;
+											// update account balance and create transaction
+											Transaction transaction = new Transaction("add funds", 1000000000, account_number, add, new Date());
+											int wentThrough = dao.cashOperation(transaction, account_number, newBalance);
+											if (wentThrough!= 0 && wentThrough!=1 ) {
 												log.info("\n Funds added successfully. Availible balance is: $ "+newBalance);
 											}else {
 												log.info("\n  Could not add funds");}
@@ -265,24 +276,24 @@ public class BankMain {
 													
 													long transaction_id = t.getTransaction_id();
 													long sender_acccount = t.getSender_acc_num();
+													double amount = t.getAmount();
 													switch (chTr) {
 													//---------------Accept transfer-------------
 													case 1:
 														try {
 															Double balance = dao.getAccountByNumber(receiver_acc_num).getBalance();
-															Double amount = dao.getTransactionById(transaction_id).getAmount();
 															Double newBalance = balance + amount;
-															String type = "Approved Transfer";
+															String type = "approved transfer";
 															
-															dao.approveTransfer(newBalance, receiver_acc_num, transaction_id,type);
+															dao.processTransfer(newBalance, receiver_acc_num, transaction_id,type);
 															log.info("\n  Money trunsfered to your account sccessfully");
 															log.info("\n  Availible balance is $"+newBalance);
 															
 														} catch (BusinessException e) {
 															log.info(e.getMessage());
 															
-														} finally {
-															chTr=3;
+//														} finally {
+//															chTr=3;
 														}
 												break;
 												
@@ -291,9 +302,10 @@ public class BankMain {
 
 														try {
 															Double balance = dao.getAccountByNumber(sender_acccount).getBalance();
-															Double amount = dao.getTransactionById(transaction_id).getAmount();
+															
 															Double newBalance = balance + amount;
-															dao.approveTransfer(newBalance, sender_acccount, transaction_id,"Declined Transfer");
+															String type = "declined transfer";
+															dao.processTransfer(newBalance, sender_acccount, transaction_id,type);
 															log.info("\n  Money returned to sender sccessfully");
 													
 															
@@ -356,11 +368,15 @@ public class BankMain {
 								
 							case 6:
 							break;
+							
+							default:
+							log.info("Invalid menu option.Please try again!");
+							break;
 						}
 							}while (chC != 6);
 					}
 			} catch (NumberFormatException e) {
-					log.info("Player Id can not be special characters or symbols or white spaces it is numeric");
+					log.info("Numeric only. No characters, symbols or white spaces are accepted");
 			} catch (BusinessException e) {
 					log.info(e.getMessage());
 			}
@@ -375,15 +391,15 @@ public class BankMain {
 			case 2:
 				try {
 
-					log.info("\n  Enter your FIRST NAME");
+					log.info("  Enter your FIRST NAME");
 					String first_name=sc.nextLine();
-					log.info("\n Enter your LAST NAME");
+					log.info(" Enter your LAST NAME");
 					String last_name=sc.nextLine();
-					log.info("\n  Enter F or M for your gender");
+					log.info("  Enter F or M for your gender");
 					String gender=sc.nextLine();
 					
 					// Date formatting
-					log.info("\n  Enter your DATE OF BIRTH in format yyyy-dd-mm");
+					log.info("  Enter your DATE OF BIRTH in format yyyy-dd-mm");
 					String s = sc.nextLine();
 			    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM");
 			    	sdf.setLenient(false);
@@ -393,12 +409,12 @@ public class BankMain {
 			    	}catch (ParseException e1){
 			    		log.info("Invalid date format");
 			    	}
-
-					log.info("Enter your SSN");
+			    	
+					log.info("Enter your SSN (9 digits without space)");
 					Long ssn = Long.parseLong(sc.nextLine());
 					log.info("Enter your ADDRESS");
 					String address = sc.nextLine();	
-					log.info("Enter your PHONE number");
+					log.info("Enter your PHONE number (10 digits without space)");
 					Long contact = Long.parseLong(sc.nextLine());
 
 					//Create new Customer
@@ -407,13 +423,16 @@ public class BankMain {
 					if(service.createCustomer(customer)!=0) {
 						
 						// Create Login
-						log.info("\n  Enter new LOGIN");
+						int chL = 0;
+						do {
+						
+						log.info("  Enter new LOGIN (4-12 characters");
 						String login = sc.nextLine();
-						log.info("\n  Enter new PASSWORD");
+						log.info("  Enter new PASSWORD (4-12 characters");
 						String password = sc.nextLine();
 						
 						// Get new Customer ID by SSN
-						int id = dao.getCustomerBySSN(ssn).getId();
+						int id = adminService.getCustomerBySSN(ssn).getId();
 						CustomerLogin customer_login= new CustomerLogin(id, login, password);
 
 							if(dao.createLogin(customer_login)!=0) {
@@ -432,9 +451,10 @@ public class BankMain {
 									if(dao.createAccount(newAccount)!=0) {
 										log.info("\n  Registration complited successfully. Now you can log in");
 										log.info("\n  Your accoutn " + newAccount.getAccount_number()+" is pending");
+										chL++;
 									}
 							}
-					}
+					} while (chL!=1);}
 				} catch (BusinessException e) {
 					log.info(e.getMessage());
 				}
@@ -446,16 +466,16 @@ public class BankMain {
 //--3----------------------------------Employee--------------------------------------	
 				
 			case 3:
-				try {
-				log.info("  Enter your EMPLOYEE ID");
-				String employee_id=sc.nextLine();
-				log.info("  Enter your PASSWORD");
-				String password = sc.nextLine();
-
-				Employee employee = loginService.employeeLogin(employee_id, password);
-				
-				if (employee !=null) {
-					log.info("	Hello "+ employee.getName());
+//				try {
+//				log.info("  Enter your EMPLOYEE ID");
+//				String employee_id=sc.nextLine();
+//				log.info("  Enter your PASSWORD");
+//				String password = sc.nextLine();
+//
+//				Employee employee = loginService.employeeLogin(employee_id, password);
+//				
+//				if (employee !=null) {
+//					log.info("You logged in as "+ employee.getName());
 			
 					int chE = 0;
 				
@@ -463,11 +483,14 @@ public class BankMain {
 						log.info("\n===========================");;
 						log.info("       EMPLOYEE MENU");
 						log.info("===========================");
-						log.info("  (1)  Register new customer");
-						log.info("  (2)  View all accounts by status");
+						log.info("  (1)  Customer registration");
+						log.info("  (2)  List of accounts by status");
 						log.info("  (3)  Change status of an account");
+						log.info("  (4)  List of transactions");
+						log.info("  (5)  List of customers");
+						log.info("  (6)  Find a customer");
 
-						log.info("  (4)  EXIT");
+						log.info("  (7)  EXIT");
 
 				
 						chE = Integer.parseInt(sc.nextLine());
@@ -517,10 +540,10 @@ public class BankMain {
 							}
 						
 							// Get new Customer ID by SSN
-							Customer newCustomerE = dao.getCustomerBySSN(ssnE);
+							Customer newCustomerE = adminService.getCustomerBySSN(ssnE);
 							log.info( "  Profile with  ID " + newCustomerE.getId()+" created succsessfully");
 						
-							log.info("\n   Enter starting balance forann account");
+							log.info("\n   Enter starting balance for an account");
 							Double startBalanceE=sc.nextDouble();
 						
 							// Generate Account Number
@@ -570,7 +593,7 @@ public class BankMain {
 							String status = sc.nextLine();
 							try {
 						
-								List<Account> accountsList = service.getAccountsByStatus(status);
+								List<Account> accountsList = adminService.getAccountsByStatus(status);
 								if (accountsList!= null) {
 									log.info("List of accounts with status:  "+ status);
 									for(Account a : accountsList) {
@@ -585,7 +608,7 @@ public class BankMain {
 
 						break;
 						
-//--3.3----------------------------------Update status of an account-------------------------------------	
+//--3.3----------------------------------Update status of an account by number-------------------------------------	
 						case 3:
 							log.info("  Enter accout number status of witch you would like to change");
 							Long account_numberE = Long.parseLong(sc.nextLine());
@@ -595,7 +618,7 @@ public class BankMain {
 						
 							try {
 					
-								if(service.updateAccountStatus(statusE, account_numberE)!=0) {
+								if(adminService.updateAccountStatus(statusE, account_numberE)!=0) {
 									log.info("\n  Account udated successfully");
 								} else {
 									log.info("\n  Could not update status");
@@ -607,27 +630,121 @@ public class BankMain {
 						break;
 //--3.4-------------------------------See all transactions  -------------------------------	
 						case 4:
-							log.info("See you soon");
+							try {
+								List<Transaction> transactionList = adminService. getAllTransactions();
+								if(transactionList!=null) {
+									log.info("\n  All bank transactions:");
+									log.info("-----------------------------");
+									for (Transaction t : transactionList) {
+										log.info(t);
+									}
+								} else {
+									log.info("\n  Could access transactions list");
+								};
+						
+							}catch (BusinessException e) {
+								log.info(e.getMessage());
+							}
 						
 						break;
 						
-//-3.5-------------------------------------------Exit-------------------------------------	
+//-3.5-------------------------------See All Customers--------------------------------	
 						case 5:
-							log.info("See you soon");
+							try {
+								List<Customer> customersList = adminService.getAllCustomers();
+								if(customersList!=null) {
+									log.info("\n  All customers:");
+									log.info("-----------------------------");
+									for (Customer c : customersList) {
+										log.info(c);
+									}
+								} else {
+									log.info("\n  Could access customers list");
+								};
+						
+							}catch (BusinessException e) {
+								log.info(e.getMessage());
+							}
 						
 						break;
+//-3.6-------------------------------Find A Customers--------------------------------------	
+						case 6:
+							
+							int chFind = 0;
+							
+							do {
+								log.info("\n===========================");
+								log.info("     CUSTOMER SEARCH");
+								log.info("===========================");
+								log.info("  (1) By ID");
+								log.info("  (2) By SSN");
+								log.info("  (3) EXIT");
+								
+								try {
+									chFind = Integer.parseInt(sc.nextLine());
+								} catch (NumberFormatException e) {
+								}
+								switch (chFind) {
+								
+								//--3.6.1----------------------------- Customer by ID -----------------------------
+
+								case 1:
+									try {
+										log.info("  Enter customer ID");
+										int id = Integer.parseInt(sc.nextLine());
+										Customer customer =adminService.getCustomerById(id);
+										if(customer!=null) {
+											log.info(customer);
+										} else {
+											log.info("\n  Could access customer info");
+										};
+								
+									}catch (BusinessException e) {
+										log.info(e.getMessage());
+									}
+							
+									break;	
+									
+									//--3.6.2----------------------------- Customer by SSN -----------------------------
+
+									case 2:
+										try {
+											log.info("  Enter customer SSN");
+											long ssn = Long.parseLong(sc.nextLine());
+											Customer customer =adminService.getCustomerBySSN(ssn);
+											if(customer!=null) {
+												log.info(customer);
+											} else {
+												log.info("\n  Could access customer info");
+											};
+									
+										}catch (BusinessException e) {
+											log.info(e.getMessage());
+										}
+								
+										break;	
+								default:
+									log.info("Invalid menu option.Please try again!");
+									break;
+								}
+							} while (chE != 3);
 						
+//-3.7-------------------------------------------Exit-------------------------------------	
+						case 7:
+							log.info("See you soon");
+						
+						break;						
 						default:
 							log.info("Invalid menu option.Please try again!");
 						break;
 						}
-					} while (chE != 5);
-				} else {
-					log.info("Wrong employee id or password");
-				}
-			} catch (BusinessException e) {
-				log.info(e.getMessage());
-				}
+					} while (chE != 7);
+//				} else {
+//					log.info("Wrong employee id or password");
+//				}
+//			} catch (BusinessException e) {
+//				log.info(e.getMessage());
+//				}
 					
 			default:
 				log.info("Invalid menu option.Please try again!");
@@ -639,37 +756,7 @@ public class BankMain {
 		
 	
 
-//		CustomerDAO dao = new CustomerDAOImpl();
-//		
-//		//Add customer
-//		
-//		Customer cust = new Customer(70040, "Eli", "Nole","M", new Date(), 9001312321L, 9001312321L, "5678 S Blue Ave");
-//		
-//		
-//		try {
-//			if(dao.createCustomer(cust)!=0) {
-//				log.info("Customer created successfully");
-//			}
-//		} catch (BusinessException e) {
-//			log.info(e.getMessage());
-//			
-//		}
-//		
-//		// Get customer by id
 
-
-//		CustomerDAO dao = new CustomerDAOImpl();
-//		try {
-//			Customer customer= dao.getCustomerById(70032);
-//			if(customer!=null) {
-//				log.info("\nDetails of customerwith id "+customer.getId());
-//				log.info(customer);
-//			}
-//		} catch (BusinessException e) {
-//			log.info(e);
-//		}}}
-//		
-//
 
 
 

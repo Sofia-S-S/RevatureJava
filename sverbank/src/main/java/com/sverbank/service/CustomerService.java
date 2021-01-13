@@ -10,14 +10,15 @@ import com.sverbank.model.CustomerLogin;
 
 public interface CustomerService {
 	public int createCustomer(Customer customer) throws BusinessException;
-	public Customer getCustomerById(int id) throws BusinessException;
+
+
 
 	public List<Account> getAccountsById(int customer_id) throws BusinessException;
 
 	public Account getAccountByNumber(long account_number) throws BusinessException;
-	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException;
-	public List<Account> getAccountsByStatus(String status) throws BusinessException;
-	public int updateAccountStatus(String status,long account_number) throws BusinessException;
+//	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException;
+
+
 	public int createLogin(CustomerLogin customer_login) throws BusinessException;
 	
 

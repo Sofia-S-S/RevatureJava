@@ -16,7 +16,7 @@ import com.sverbank.dao.CustomerDAO;
 import com.sverbank.model.Account;
 import com.sverbank.model.Customer;
 import com.sverbank.model.CustomerLogin;
-import com.sverbank.model.Employee;
+
 import com.sverbank.model.Transaction;
 
 public class CustomerDAOImpl implements CustomerDAO {
@@ -43,82 +43,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			System.out.println(e);
+			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
 		return c;
 	}
 
-	@Override
-	public Customer getCustomerBySSN(long ssn) throws BusinessException {
-		Customer customer = null;
-		try (Connection connection=PostresqlConnection.getConnection()){	
-			String sql = "select id from sverbank.customer where ssn=?";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setLong(1, ssn);
-			ResultSet resultSet=preparedStatement.executeQuery();
-			if(resultSet.next()){
-				//if we found a player -> instantiate player object and set values to it
-				customer = new Customer();
-				customer.setSsn(ssn);
-				customer.setId(resultSet.getInt("id"));
 
-				
-			}else {
-				throw new BusinessException("No customer not found with ssn "+ssn);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			System.out.println(e);//take off this lane when app is live
-			throw new BusinessException("Some internal error occured. Please contact admin");
-		
-			
-		} 
-		return customer; //always start your code with fixing auto generated return
-	}
-
-
-
-	@Override
-	public Customer getCustomerById(int id) throws BusinessException {
-		Customer customer = null;
-		try (Connection connection=PostresqlConnection.getConnection()){	
-			String sql = "select first_name,last_name,gender,dob,ssn,address,contact from sverbank.customer where id=?";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setInt(1, id);
-			ResultSet resultSet=preparedStatement.executeQuery();
-			if(resultSet.next()){
-				//if we found a player -> instantiate player object and set values to it
-				customer = new Customer();
-				customer.setId(id);
-				customer.setFirst_name(resultSet.getString("first_name"));
-				customer.setLast_name(resultSet.getString("last_name"));
-				customer.setGender(resultSet.getString("gender"));
-				customer.setDob(resultSet.getDate("dob"));
-				customer.setSsn(resultSet.getLong("ssn"));
-				customer.setAddress(resultSet.getString("address"));
-				customer.setContact(resultSet.getLong("contact"));
-				
-			}else {
-				throw new BusinessException("No customer found with id "+id);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			System.out.println(e);//take off this lane when app is live
-			throw new BusinessException("Some internal error occured. Please contact admin");
-		
-			
-		} 
-		return customer; //always start your code with fixing auto generated return
-	}
-//
-//	@Override
-//	public List<Customer> getAllCustomers() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
 	@Override
 	public int createAccount(Account account) throws BusinessException {
 		int c = 0;
@@ -135,7 +67,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			System.out.println(e);
+			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
@@ -157,7 +89,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException | NumberFormatException e) {
 			
-			System.out.println(e);
+			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact Sverbank");
 		}
@@ -189,7 +121,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 				throw new BusinessException("No Accounts found for customer with id "+customer_id);
 			}
 		}catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e); // Take off this line when app is live
+			log.info(e); // Take off this line when app is live
 			throw new BusinessException("Internal error occured contact SYSADMIN ");
 		}
 		return accountsList;
@@ -214,7 +146,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 				account.setBalance(resultSet.getDouble("balance"));
 				account.setStatus(resultSet.getString("status"));
 			} else {
-				System.out.println("getAccountByNumber DAO fail");
+				log.info("getAccountByNumber DAO fail");
 				throw new BusinessException("Wrong account number");
 
 			}
@@ -223,91 +155,47 @@ public class CustomerDAOImpl implements CustomerDAO {
 		}
 		return account;
 	}
-	// ------------------------get all accounts by status ------------------------------------------
-	@Override
-	public List<Account> getAccountsByStatus(String status) throws BusinessException {
-		List<Account> accountsList=new ArrayList<>();
-		try (Connection connection = PostresqlConnection.getConnection()) {
-			String sql = "select * from sverbank.account where status=?";
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, status);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Account account = new Account();
-				account.setStatus(status);
-				account.setCustomer_id(resultSet.getInt("customer_id"));
-				account.setAccount_number(resultSet.getLong("account_number"));
-				account.setBalance(resultSet.getDouble("balance"));
-				accountsList.add(account);
 
-			} if(accountsList.size()==0) {
-				throw new BusinessException("Wrong status");
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("getAccountsByStatus DAO fail");
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
-		}
-		return accountsList;
-	}
-	// ------------------------update account status ( active / pending)  ------------------------------------------
-	@Override
-	public int updateAccountStatus(String status,long account_number) throws BusinessException {
-		int up=0;
-		try (Connection connection=PostresqlConnection.getConnection()){	
-		String sql="update sverbank.account set status=? where account_number=?";
-		PreparedStatement preparedStatement=connection.prepareStatement(sql);
-		preparedStatement.setString(1, status);
-		preparedStatement.setLong(2, account_number);
-		preparedStatement.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);//take off this lane when app is live
-			throw new BusinessException("Some internal error occured. Please contact admin");
-			
-		}
-		return up;
-	}
+
 	// ------------------------update balance ( add/ withdraw)------------------------------------------
 
 		@Override
-		public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException {
-			Account account=null;
+		public int cashOperation(Transaction transaction, long account_number, double newBalance) throws BusinessException {
+		int xy = 0;
 			try (Connection connection=PostresqlConnection.getConnection()){	
-			String sql="update sverbank.account set balance=? where account_number=?";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+				
+			String sqlAccount="update sverbank.account set balance=? where account_number=?";
+			String sqlTransaction="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
+			
+			PreparedStatement preparedStatementAccount=connection.prepareStatement(sqlAccount);
+			PreparedStatement preparedStatementTransaction=connection.prepareStatement(sqlTransaction);
+			
+			connection.setAutoCommit(false); // !!!
 
-			preparedStatement.setDouble(1, newBalance);
-			preparedStatement.setLong(2, account_number);
-			preparedStatement.executeUpdate();
+			preparedStatementAccount.setDouble(1, newBalance);
+			preparedStatementAccount.setLong(2, account_number);
+			int x = preparedStatementAccount.executeUpdate();
+			
+			preparedStatementTransaction.setString(1, transaction.getType());
+			preparedStatementTransaction.setLong(2, transaction.getSender_acc_num());
+			preparedStatementTransaction.setLong(3, transaction.getReceiver_acc_num());
+			preparedStatementTransaction.setDouble(4, transaction.getAmount());
+			preparedStatementTransaction.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
+			int y = preparedStatementTransaction.executeUpdate();
+			
+			connection.commit(); // !!!
+			xy = x+y;
+			
 			} catch (ClassNotFoundException | SQLException e) {
-				System.out.println(e);//take off this lane when app is live
+				log.info(e);//take off this lane when app is live
+			
 				throw new BusinessException("Some internal error occured. Please contact admin");
 				
 			}
-			return account;
+			return xy;
+			
 		}
-	@Override
-	public int createTransaction(Transaction transaction) throws BusinessException {
-		int t = 0;
-		try (Connection connection=PostresqlConnection.getConnection()){
-			
-			String sql="insert into sverbank.transaction (type, sender_acc_num, receiver_acc_num, amount, date) values(?,?,?,?,?)";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setString(1, transaction.getType());
-			preparedStatement.setLong(2, transaction.getSender_acc_num());
-			preparedStatement.setLong(3, transaction.getReceiver_acc_num());
-			preparedStatement.setDouble(4, transaction.getAmount());
-			preparedStatement.setDate(5, new java.sql.Date(transaction.getDate().getTime()));
-			
-			t = preparedStatement.executeUpdate();
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			System.out.println(e);
-			
-			throw new BusinessException("Some internal error occured. Please contact admin");
-		}
-		return t;
-	}
+
 
 	@Override
 	public void createTransactionTransfer(Transaction transaction, long account_number, double newBalance) throws BusinessException {
@@ -337,7 +225,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			System.out.println(e);
+			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact admin");
 		}
@@ -345,12 +233,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void approveTransfer(double newBalance, long receiver_acc_num, long transaction_id, String type) throws BusinessException {
+	public void processTransfer(double newBalance, long account_number, long transaction_id, String type) throws BusinessException {
 
 		try (Connection connection=PostresqlConnection.getConnection()){
 			
 			String updateBalance ="update sverbank.account set balance=? where account_number=?";
-			String deleteTransfer ="update sverbank.transaction set type=? where transaction_id=? and receiver_acc_num=?";
+			String deleteTransfer ="update sverbank.transaction set type=? where transaction_id=? ";
 			
 			PreparedStatement preparedStatementBalance=connection.prepareStatement(updateBalance);
 			PreparedStatement preparedStatementTransfer=connection.prepareStatement(deleteTransfer);
@@ -358,53 +246,25 @@ public class CustomerDAOImpl implements CustomerDAO {
 			connection.setAutoCommit(false); // !!!
 
 			preparedStatementBalance.setDouble(1, newBalance);
-			preparedStatementBalance.setLong(2, receiver_acc_num);
+			preparedStatementBalance.setLong(2, account_number);
 			preparedStatementBalance.executeUpdate();
 			
 			preparedStatementTransfer.setString(1, type);
 			preparedStatementTransfer.setLong(2, transaction_id);
-			preparedStatementTransfer.setLong(3, receiver_acc_num);
 			preparedStatementTransfer.executeUpdate();
 			
 			connection.commit(); // !!!
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			
-			System.out.println(e);
+			log.info(e);
 			
 			throw new BusinessException("Some internal error occured. Please contact admin");
 			}
 		
 	}
 
-	@Override
-	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num) throws BusinessException {
-		List<Transaction> transfersList=new ArrayList<>();
-		try (Connection connection = PostresqlConnection.getConnection()) {
-			String sql="select transaction_id, sender_acc_num, amount, date from sverbank.transaction where type ='transfer' and receiver_acc_num = ?";
-			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setLong(1, receiver_acc_num);
 
-			ResultSet resultSet=preparedStatement.executeQuery();
-			while(resultSet.next()) {
-				Transaction transfer =new Transaction();
-				transfer.setReceiver_acc_num(receiver_acc_num);
-				transfer.setTransaction_id(resultSet.getLong("transaction_id"));
-				transfer.setSender_acc_num(resultSet.getLong("sender_acc_num"));
-				transfer.setAmount(resultSet.getDouble("amount"));
-				transfer.setDate(resultSet.getDate("date"));
-				transfersList.add(transfer);
-			}
-			if(transfersList.size()==0)
-			{
-				throw new BusinessException("No awaiting transfers found for account number "+receiver_acc_num);
-			}
-		}catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e); // Take off this line when app is live
-			throw new BusinessException("Internal error occured contact SYSADMIN ");
-		}
-		return transfersList;
-	}
 
 	@Override
 	public Transaction getTransactionById(long transaction_id) throws BusinessException {
@@ -424,16 +284,28 @@ public class CustomerDAOImpl implements CustomerDAO {
 				transaction.setDate(resultSet.getDate("date"));
 
 			} else {
-				System.out.println("No trunsfer found with id "+transaction_id);
+				log.info("No trunsfer found with id "+transaction_id);
 				throw new BusinessException("No trunsfer found with id "+transaction_id);
 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e);
+			log.info(e);
 			throw new BusinessException("Internal error occured contact SYSADMIN getTransactionById");
 		}
 		return transaction;
 	}
+
+
+	@Override
+	public List<Transaction> getTtransfersByAccNumber(long receiver_acc_num) throws BusinessException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+
 
 
 

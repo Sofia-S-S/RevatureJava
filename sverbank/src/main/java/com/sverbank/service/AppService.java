@@ -25,9 +25,9 @@ public class AppService {
 		return b;
 		
 	}
-	public boolean approveTransfer(double newBalance, long receiver_acc_num, long transaction_id, String type) throws BusinessException {
-		dao.approveTransfer(newBalance, receiver_acc_num, transaction_id, type);
-		System.out.println("approveTransfer");
+	public boolean processTransfer(double newBalance, long receiver_acc_num, long transaction_id, String type) throws BusinessException {
+		dao.processTransfer(newBalance, receiver_acc_num, transaction_id, type);
+		System.out.println("processTransfer");
 		return true;
 	}
 

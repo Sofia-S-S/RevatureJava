@@ -62,8 +62,10 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [customer_id=" + customer_id + ", account_number=" + account_number + ", balance=" + balance
-				+ ", status=" + status + "]";
+		String id = String.format( "%-6s", customer_id); 
+		String b = String.format( "%-8s", balance); 
+		return "Customer id : " + id + " | Account number : " + account_number + " | Balance : $" + b
+				+ " | Status : " + status;
 	}
 	
 

@@ -85,16 +85,13 @@ public class Customer {
 		this.gender = gender;
 	}
 
-
-	public Date getDob() {
-		return dob;
-	}
-
-
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
+	public Date getDob() {
+		return dob;
+	}
 
 	public long getSsn() {
 		return ssn;
@@ -128,16 +125,11 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", first_name=" + first_name + ", last_name=" + last_name + ", gender=" + gender
-				+ ", dob=" + dob + ", ssn=" + ssn + ", contact=" + contact + ", address=" + address + "]";
+		String i = String.format( "%-6s", id); 
+		String fn = String.format( "%-10s", first_name); 
+		String ln = String.format( "%-10s", last_name); 
+		return " Customer id : " + i + " | First name : " + fn + " | Last name : " + ln + " | Gender : " + gender
+				+ " | Dob : " + dob + " | SSN : " + ssn + " | Phone number : +1 " + contact + " | Address=" + address;
 	}
-
-
-	public void setLogin(String login) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 }

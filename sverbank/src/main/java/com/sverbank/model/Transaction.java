@@ -87,8 +87,11 @@ public class Transaction{
 
 	@Override
 	public String toString() {
-		return "Transaction [transaction_id=" + transaction_id + ", type=" + type + ", sender_acc_num=" + sender_acc_num
-				+ ", receiver_acc_num=" + receiver_acc_num + ", amount=" + amount + ", date=" + date + "]";
+		String id = String.format( "%-9s", transaction_id); 
+		String t = String.format( "%-17s", type); 
+		String a = String.format( "%-7s", amount); 
+		return "Transaction id : " + id + " | Type : " + t + "| Sender account : " + sender_acc_num
+				+ " | Receiver account : " + receiver_acc_num + " | Amount : $" + a + " | Aate : " + date;
 	}
 	
 }

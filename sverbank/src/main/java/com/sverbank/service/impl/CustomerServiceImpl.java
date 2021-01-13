@@ -56,19 +56,9 @@ public class CustomerServiceImpl implements CustomerService{
 		return x;
 	}
 
-	@Override
-	public Customer getCustomerById(int id) throws BusinessException {
-		Customer customer = null;
-		if (id > 1000 && id < 100000) {
-			System.out.println("getCustomerById service passed");
-			customer = customerDAO.getCustomerById(id);
-		} else {
-			System.out.println("getCustomerById service failed");
-			throw new BusinessException("Customer Id " + id + " is INVALID......");
-		}
-		return customer;
-	}
+
 	
+
 	@Override
 	public int createLogin(CustomerLogin customer_login) throws BusinessException {
 		int x = 0;
@@ -94,19 +84,19 @@ public class CustomerServiceImpl implements CustomerService{
 		return accountsList;
 	}
 
-	@Override
-	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException {
-		Account account = null;
-		if(account_number>1000000000L && account_number<9999999999L) {
-			if(newBalance>0) {
-			System.out.println("updateAccountBalance service passed");
-			account = customerDAO.updateAccountBalance(account_number, newBalance);
-			}else {throw new BusinessException("You do not have enough funds for trunsfer");};
-		}else {
-			throw new BusinessException("Account Number " + account_number + " is INVALID or you do not have enough money for trunsfer");
-		}
-		return account;
-	}
+//	@Override
+//	public Account updateAccountBalance(long account_number, double newBalance) throws BusinessException {
+//		Account account = null;
+//		if(account_number>1000000000L && account_number<9999999999L) {
+//			if(newBalance>0) {
+//			System.out.println("updateAccountBalance service passed");
+//			account = customerDAO.updateAccountBalance(account_number, newBalance);
+//			}else {throw new BusinessException("You do not have enough funds for trunsfer");};
+//		}else {
+//			throw new BusinessException("Account Number " + account_number + " is INVALID or you do not have enough money for trunsfer");
+//		}
+//		return account;
+//	}
 
 
 	
@@ -122,37 +112,8 @@ public class CustomerServiceImpl implements CustomerService{
 		return account;
 	}
 	
-	@Override
-	public List<Account> getAccountsByStatus(String status) throws BusinessException {
-		List<Account> accountsList = null;
-		if (status.equals("active"))  {
-			System.out.println("getAccountsById service passed");
-			accountsList = customerDAO.getAccountsByStatus(status);
-		} else if (status.equals("pending")){
-			System.out.println("getAccountsById service passed");
-			accountsList = customerDAO.getAccountsByStatus(status);
-			} else {
-				throw new BusinessException("Status " + status + " is INVALID");
-		}
-		return accountsList;
-	}
 
-	@Override
-	public int updateAccountStatus(String status, long account_number) throws BusinessException {
-		int up=0;
-		if(status.equals("active") && account_number>1000000000L && account_number<9999999999L) {
-			System.out.println("getAccountByNumber service passed");
-			customerDAO.updateAccountStatus(status, account_number);
-			up++;
-		}else if(status.equals("pending") && account_number>1000000000L && account_number<9999999999L) {
-			System.out.println("getAccountByNumber service passed");
-			customerDAO.updateAccountStatus(status, account_number);
-			up++;
-		}else {
-			throw new BusinessException("Account Number " + account_number + "os status "+status+" is INVALID ");
-		}
-		return up;
-	}
+
 
 
 
